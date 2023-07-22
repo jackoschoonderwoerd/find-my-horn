@@ -1,0 +1,37 @@
+<main>
+    <div class="left">
+        <div class="header">create post</div>
+        <app-select-brand #appSelectBrand></app-select-brand>
+        <app-select-type #appSelectType></app-select-type>
+        <app-serial-number></app-serial-number>
+        <app-date-of-purchase #appDateOfPurchase></app-date-of-purchase>
+        <app-comment></app-comment>
+        <button class="clear-all"
+            mat-raised-button
+            (click)="onClearAll()">clear all</button>
+    </div>
+    <div class="right">
+        <div class="header">post</div>
+        <div class="brand-name horn-property"><span>brand</span>
+            {{(selectedBrand$|async)?.name}}
+        </div>
+        <div class="sax-type horn-property"><span>type</span>
+            {{(selectedSaxType$|async)?.name}}
+        </div>
+        <div class="serial-number horn-property"><span>serial number</span>
+            {{(serialNumber$|async)}}
+        </div>
+        <div class="dat-of-purchase horn-property"><span>dop</span>
+            {{dateOfPurchase$|async|date}}
+        </div>
+        <div class="comment horn-property"><span>comment</span>
+            {{comment$|async}}
+        </div>
+        <div class="buttons">
+            <button class="add-post"
+                mat-raised-button
+                (click)="onAddPost()"
+                color="primary">add post</button>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,11 @@
+<mat-form-field>
+    <mat-label>select brand</mat-label>
+    <mat-select #matRef
+        (selectionChange)=brandSelected($event)>
+
+        <mat-option *ngFor="let brand of brands$|async"
+            [value]="brand">
+            {{brand.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

@@ -1,0 +1,24 @@
+<!-- <div class="saxophone">
+    <div class="brand">{{posts[0].saxophone.brand.name}}</div>
+    <div class="sax-type">{{posts[0].saxophone.saxType.name}}</div>
+    <div class="serial-number">{{posts[0].saxophone.serialNumber}}</div>
+</div> -->
+
+<!-- <app-single-post *ngFor="let post of posts"
+    [post]="post"></app-single-post> -->
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <div class="saxophone">
+                <div class="brand">{{posts[0].saxophone.brand.name}}</div>
+                <div class="sax-type">{{posts[0].saxophone.saxType.name}}</div>
+                <div class="serial-number">{{posts[0].saxophone.serialNumber}}</div>
+            </div>
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+            This is a summary of the content
+        </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <app-single-post *ngFor="let post of posts"
+        [post]="post"></app-single-post>
+</mat-expansion-panel>

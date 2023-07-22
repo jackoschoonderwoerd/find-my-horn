@@ -1,0 +1,9 @@
+mat-toolbar {
+    display: flex;
+    // grid-template-columns: repeat(10 1fr);
+    gap: 1rem;
+}
+
+.router-link-active {
+    color: red;
+}

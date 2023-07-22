@@ -1,0 +1,74 @@
+.posts-by-serial-list {
+    border: 3px solid red;
+    display: grid;
+
+    .posts-by-serial-list-item {
+        border: 2px solid lightgreen;
+    }
+}
+
+// .posts-list {
+//     display: grid;
+//     grid-template-columns: 1fr;
+//     gap: 1rem;
+//     .posts-list-item {
+//         display: grid;
+//         grid-template-columns: 1fr;
+//         gap: 1rem;
+//         border: 1px solid black;
+//         padding: 1rem;
+//         .saxophone-properties {
+//             .saxophone-property {
+//                 display: grid;
+//                 grid-template-columns: 10rem auto;
+//             }
+//         }
+//         .posts-by-serialnumber-list {
+//             display: grid;
+//             grid-template-columns: 1fr;
+//             gap: 1rem;
+//             .posts-by-serialnumber-list-item {
+//                 display: grid;
+//                 grid-template-columns: 1fr auto;
+//                 padding: 1rem;
+//                 background-color: wheat;
+//                 .post-content {
+//                     div {
+//                         display: grid;
+//                         grid-template-columns: 10rem auto;
+//                     }
+//                 }
+//                 .buttons {
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .posts-list {
+//     display: grid;
+//     grid-template-columns: 1fr;
+//     gap: 0.5rem;
+//     .posts-list-item {
+//         padding: 0.2rem;
+//         display: grid;
+//         grid-template-columns: 1fr;
+
+//         background-color: wheat;
+//         border: 1px solid lightgray;
+//         .header {
+//             display: grid;
+//             grid-template-columns: 10rem auto;
+//         }
+//         .saxophone {
+//             .saxophone-property {
+//                 display: grid;
+//                 grid-template-columns: 10rem auto;
+//             }
+//         }
+//         .comment {
+//             display: grid;
+//             grid-template-columns: 10rem auto;
+//         }
+//     }
+// }

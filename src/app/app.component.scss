@@ -1,0 +1,6 @@
+.main {
+    height: 100vh;
+    // border: 3px solid red;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}

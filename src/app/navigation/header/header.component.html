@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+    <a routerLink="home"
+        routerLinkActive="router-link-active">
+        <mat-icon aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="home"></mat-icon>
+    </a>
+
+    <a *ngIf="!(user$|async)"
+        routerLink="sign-up"
+        routerLinkActive="router-link-active">sign up</a>
+
+    <a *ngIf="!(user$|async)"
+        routerLink="log-in"
+        routerLinkActive="router-link-active">log in</a>
+
+
+    <a routerLink="''"
+        *ngIf="user$|async"
+        (click)="onSignOut()">sign out</a>
+
+    <a routerLink="admin"
+        routerLinkActive="router-link-active">admin</a>
+
+    <a routerLink="user"
+        routerLinkActive="router-link-active"
+        (click)="onUser()">user</a>
+
+    <div class="email">
+        {{((user$|async)?.email).split('@')[0]}}
+    </div>
+</mat-toolbar>
+
+
+<!-- <mat-toolbar color="primary">
+    <a routerLink="log-in"
+        routerLinkActive="router-link-active">log in</a>
+</mat-toolbar> -->

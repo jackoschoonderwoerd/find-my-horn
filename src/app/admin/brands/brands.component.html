@@ -1,0 +1,41 @@
+<main>
+    <div class="left">
+
+        <ul class="brands-list">
+            <li class="brands-list-item"
+                *ngFor="let brand of brands$|async">
+                <div class="name">{{brand.name}}</div>
+                <div class="buttons">
+
+                    <button mat-raised-button
+                        color="warn"
+                        class="delete"
+                        (click)="onDelete(brand.id)">delete</button>
+                    <button mat-raised-button
+                        color="primary"
+                        class="details"
+                        (click)="onDetails(brand)">details</button>
+                </div>
+            </li>
+        </ul>
+
+        <!-- <form [formGroup]="brandForm">
+            <mat-form-field>
+                <mat-label>enter brand name</mat-label>
+                <input type="text"
+                    matInput
+                    formControlName="name">
+            </mat-form-field>
+        </form> -->
+        <button *ngIf="!showAddBrand"
+            mat-raised-button
+            color="primary"
+            (click)="onAddBrand()">add brand</button>
+        <app-brand-name (hideAddBrand)="hideAddBrand()"
+            *ngIf="showAddBrand"></app-brand-name>
+    </div>
+    <div class="right">
+        <app-brand-details (clearDetails)="clearDetails()"
+            [brand]="selectedBrand"></app-brand-details>
+    </div>
+</main>

@@ -1,0 +1,13 @@
+<main class="component-container">
+
+
+
+    <app-add-post *ngIf="addPostVisible">
+    </app-add-post>
+    <button mat-raised-button
+        color="primary"
+        (click)="onToggleAddHorn()">{{addPostVisible ? 'hide add post':'show add post'}}</button>
+
+    <app-posts></app-posts>
+
+</main>

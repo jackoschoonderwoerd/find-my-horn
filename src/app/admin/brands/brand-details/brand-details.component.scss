@@ -1,0 +1,31 @@
+main {
+    border: 1px solid black;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    .sax-types-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        .sax-types-list-item {
+            align-items: center;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            background-color: wheat;
+            padding: 0.3rem;
+        }
+    }
+    .add-type {
+        border: 1px solid black;
+        padding: 1rem;
+        margin-top: 2rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+}

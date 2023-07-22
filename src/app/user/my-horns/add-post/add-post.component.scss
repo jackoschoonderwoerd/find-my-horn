@@ -1,0 +1,30 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    .left {
+        border: 1px solid black;
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        .header {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+    }
+    .right {
+        border: 1px solid black;
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        .header {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+        .horn-property {
+            display: grid;
+            grid-template-columns: 8rem 1fr;
+        }
+    }
+}

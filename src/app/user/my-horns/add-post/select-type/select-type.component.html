@@ -1,0 +1,10 @@
+<mat-form-field>
+    <mat-label>select type</mat-label>
+    <mat-select #matRef
+        (selectionChange)=typeSelected($event)>
+        <mat-option *ngFor="let type of saxTypes$|async"
+            [value]="type">
+            {{type.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

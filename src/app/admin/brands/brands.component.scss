@@ -1,0 +1,38 @@
+main {
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .left {
+        padding: 3rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        max-width: 30rem;
+        gap: 1rem;
+        .brands-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            .brands-list-item {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+                background-color: wheat;
+                padding: 0.5rem;
+                .buttons {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    gap: 1rem;
+                }
+            }
+        }
+        form {
+            padding: 1rem;
+            border: 1px solid lightgray;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+}

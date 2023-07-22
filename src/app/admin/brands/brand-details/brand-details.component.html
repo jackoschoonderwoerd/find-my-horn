@@ -1,0 +1,56 @@
+<main *ngIf="brand">
+    <div class="no-types"
+        *ngIf="(saxTypesInUse$|async).length == 0">No types for this brand</div>
+    {{brand.name}}
+    <ul *ngIf="(saxTypesInUse$|async).length > 0"
+        class="sax-types-list">
+        <li class="sax-types-list-item"
+            *ngFor="let type of saxTypesInUse$|async">
+            {{type.name}}
+            <button class="delete-sax-type"
+                mat-raised-button
+                (click)="onDeleteTypeInUse(type.id)"
+                color="warn">delete type</button>
+        </li>
+    </ul>
+
+    <button *ngIf="!addingTypeVisible"
+        class="add-type-button"
+        mat-raised-button
+        color="primary"
+        (click)="onAddType()">add type
+    </button>
+
+    <form *ngIf="addingTypeVisible"
+        class="add-type"
+        [formGroup]="addTypeForm">
+        <div class="no-types-available"
+            *ngIf="(availableSaxTypes$|async).length == 0">no more types available</div>
+        <mat-form-field *ngIf="(availableSaxTypes$|async).length > 0">
+            <mat-label>select type</mat-label>
+            <mat-select formControlName="type"
+                (selectionChange)=selectionChange($event)>
+                <mat-option *ngFor="let type of availableSaxTypes$|async"
+                    [value]="type.name">
+                    {{type.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="buttons">
+            <button class="confirm-selection"
+                [disabled]="!addTypeFormValid"
+                mat-raised-button
+                color="primary"
+                (click)="onConfirmSelection()">confirm selection</button>
+            <button mat-raised-button
+                color="primary"
+                class="cancel-adding-type"
+                (click)="onCancelAddingType()">
+                cancel
+            </button>
+        </div>
+    </form>
+
+    <button mat-raised-button
+        (click)="onClear()">clear</button>
+</main>

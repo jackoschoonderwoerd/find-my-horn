@@ -1,0 +1,25 @@
+<form *ngIf="!(isLoading$|async)"
+    [formGroup]="form">
+
+
+
+    <mat-label>email</mat-label>
+    <mat-form-field>
+        <input matInput
+            formControlName="email"
+            type="email">
+    </mat-form-field>
+
+    <mat-label>password</mat-label>
+    <mat-form-field>
+        <input matInput
+            formControlName="password"
+            type="password">
+    </mat-form-field>
+
+    <button mat-raised-button
+        [disabled]="form.invalid"
+        color="primary"
+        (click)="onSubmit()">submit</button>
+</form>
+<mat-spinner *ngIf="isLoading$|async"></mat-spinner>
