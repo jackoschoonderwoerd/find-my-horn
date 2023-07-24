@@ -8,30 +8,42 @@
         <app-comment></app-comment>
         <button class="clear-all"
             mat-raised-button
-            (click)="onClearAll()">clear all</button>
+            (click)="onClearForm()">clear form</button>
     </div>
     <div class="right">
         <div class="header">post</div>
         <div class="brand-name horn-property"><span>brand</span>
-            {{(selectedBrand$|async)?.name}}
+            <!-- {{(selectedBrand$|async)?.name}} -->
+            {{(addHornState$|async).brand?.name}}
         </div>
         <div class="sax-type horn-property"><span>type</span>
-            {{(selectedSaxType$|async)?.name}}
+            <!-- {{(selectedSaxType$|async)?.name}} -->
+            {{(addHornState$|async).saxType?.name}}
         </div>
         <div class="serial-number horn-property"><span>serial number</span>
-            {{(serialNumber$|async)}}
+            {{(addHornState$|async).serialNumber}}
+            <!-- {{(serialNumber$|async)}} -->
         </div>
         <div class="dat-of-purchase horn-property"><span>dop</span>
-            {{dateOfPurchase$|async|date}}
+            <!-- {{dateOfPurchase$|async|date}} -->
+            {{(addHornState$|async).dateOfPurchase|date}}
         </div>
         <div class="comment horn-property"><span>comment</span>
-            {{comment$|async}}
+            <!-- {{comment$|async}} -->
+            {{(addHornState$|async).comment}}
         </div>
         <div class="buttons">
-            <button class="add-post"
+            <button [disabled]="postInComplete"
+                class="add-post"
                 mat-raised-button
                 (click)="onAddPost()"
                 color="primary">add post</button>
+            <button mat-raised-button
+                class="clear-post"
+                (click)="onClearPostFromStore()">clear post from store</button>
         </div>
     </div>
+    <pre>
+        {{addHornState$|async|json}}
+    </pre>
 </main>

@@ -40,13 +40,13 @@ export class DateOfPurchaseComponent {
     ) { }
 
     onDateChanged(selectedDate: Date) {
-        console.log(selectedDate)
+        //console.log(selectedDate)
         this.store.dispatch(new ADD_HORN.SetDateOfPurchase(selectedDate))
     }
 
     clear() {
-        console.log('clearing date')
-        console.log(this.matInputRef)
+        //console.log('clearing date')
+        //console.log(this.matInputRef)
         this.matInputRef.nativeElement.value = '';
         // this.matInputRef.value
 

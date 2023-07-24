@@ -52,23 +52,23 @@ export class BrandDetailsService {
 
             const availableSaxTypes: SaxType[] = []
             saxTypesInUse.forEach((saxType: SaxType) => {
-                console.log(saxType.name)
+                //console.log(saxType.name)
             })
             this.saxTypes.forEach((saxType: SaxType) => {
-                console.log(saxType.name)
+                //console.log(saxType.name)
             })
 
             this.saxTypes.forEach((saxType: SaxType) => {
                 const index = saxTypesInUse.findIndex((saxTypeInUse: SaxType) => {
                     return saxType.name === saxTypeInUse.name
                 })
-                console.log(index)
+                //console.log(index)
                 if (index === -1) {
                     availableSaxTypes.push(saxType)
                 }
 
             })
-            console.log(availableSaxTypes)
+            //console.log(availableSaxTypes)
             this.store.dispatch(new ADMIN.SetAvailableSaxTypes(availableSaxTypes))
 
             this.store.dispatch(new ADMIN.SetSaxTypesInUse(saxTypesInUse))
@@ -81,7 +81,7 @@ export class BrandDetailsService {
         return deleteDoc(typeRef)
     }
     addType(brandId: string, saxType: string) {
-        console.log(`adding type; ${brandId}-${saxType}`)
+        //console.log(`adding type; ${brandId}-${saxType}`)
         const type = { name: saxType }
         const path = `saxes/${brandId}/saxTypes`
         const typesRef = collection(this.fireStore, path);

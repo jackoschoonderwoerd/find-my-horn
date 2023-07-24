@@ -25,6 +25,7 @@ import { SerialNumberComponent } from './serial-number/serial-number.component';
 import { DateOfPurchaseComponent } from './date-of-purchase/date-of-purchase.component';
 import { CommentComponent } from './comment/comment.component';
 import { PostsService } from '../posts/posts.service';
+import { AddHornState } from './store/add-post.reducer';
 
 
 
@@ -64,7 +65,11 @@ export class AddPostComponent implements OnInit {
     selectedSaxType$: Observable<SaxType>;
     serialNumber$: Observable<string>;
     dateOfPurchase$: Observable<Date>;
-    comment$: Observable<string>
+    comment$: Observable<string>;
+    addHornState$: Observable<AddHornState>;
+    postInComplete: boolean = true;
+    post: Post;
+
     @ViewChild('appSelectBrand', { static: false }) appSelectBrandComponent: SelectBrandComponent;
     @ViewChild('appSelectType', { static: false }) appSelectTypeComponent: SelectTypeComponent;
     @ViewChild('appDateOfPurchase', { static: false }) appDateOfPurchaseComponent: DateOfPurchaseComponent;
@@ -82,35 +87,64 @@ export class AddPostComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // this.store.subscribe((storedata: any) => console.log(storedata));
-        // this.hornService.readSaxCollection();
-        this.selectedBrand$ = this.store.select(fromRoot.getSelectedBrand);
-        this.selectedSaxType$ = this.store.select(fromRoot.getSelectedSaxType);
-        this.serialNumber$ = this.store.select(fromRoot.getSerialNumber);
-        this.dateOfPurchase$ = this.store.select(fromRoot.getDateOfPurchase);
-        this.comment$ = this.store.select(fromRoot.getComment);
         this.store.select(fromRoot.getSelectedBrand).subscribe((selectedBrand: Brand) => {
             if (selectedBrand) {
-                console.log(selectedBrand)
+                //console.log(selectedBrand)
                 this.hornService.getTypes(selectedBrand.id)
             }
         })
+        this.store.select(fromRoot.getAddHornState).subscribe((addHornState: AddHornState) => {
+            //console.log(addHornState)
+            const brand = addHornState.brand;
+            const saxType = addHornState.saxType;
+            const serialNumber = addHornState.serialNumber;
+            const dop = addHornState.dateOfPurchase;
+            const comment = addHornState.comment;
+            if (brand && saxType && serialNumber && dop && comment) {
+                const saxophone: Saxophone = {
+                    brand: addHornState.brand,
+                    saxType: addHornState.saxType,
+                    serialNumber: addHornState.serialNumber
+                }
+                this.post = {
+                    datePosted: new Date(),
+                    saxophone: saxophone,
+                    ownerId: this.afAuth.currentUser.uid,
+                    dateOfPurchase: dop,
+                    comment: comment
+                }
+                //console.log(`post complete ${this.post}`)
+                this.postInComplete = false;
+
+            } else {
+                //console.log(`post incomplete`)
+                this.postInComplete = true;
+            }
+        })
+
+        this.store.select(fromRoot.getAddHornState).subscribe((addHornState: AddHornState) => {
+            //console.log(addHornState)
+        })
+        this.addHornState$ = this.store.select(fromRoot.getAddHornState);
     }
 
-    onClearAll() {
-        console.log('onClearAll()')
+    onClearForm() {
+        //console.log('onClearAll()')
         // this.store.dispatch(new ADD_HORN.ClearAll)
         this.appSelectBrandComponent.clear()
         this.appSelectTypeComponent.clear()
         this.appDateOfPurchaseComponent.clear()
 
     }
-
-
-    onAddPost() {
-        this.postsService.addPost()
+    onClearPostFromStore() {
+        this.store.dispatch(new ADD_HORN.ClearAll())
     }
 
-
-
+    onAddPost() {
+        this.postsService.addPost(this.post)
+            .then((res: any) => {
+                this.onClearForm();
+                this.onClearPostFromStore();
+            })
+    }
 }

@@ -15,7 +15,7 @@
 // export function authReducer(state = initialState, action: any) {
 //     switch (action.type) {
 //         case IS_LOGGED_IN: {
-//             console.log(action)
+//             //console.log(action)
 //             return {
 //                 ...state,
 //                 user: action.firebaseUser,
@@ -24,7 +24,7 @@
 
 //         }
 //         case IS_LOGGED_OUT: {
-//             console.log(action)
+//             //console.log(action)
 //             return {
 //                 ...state,
 //                 user: null,

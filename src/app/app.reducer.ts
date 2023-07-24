@@ -3,7 +3,8 @@ import * as fromUi from './shared/ui.reducer';
 // import * as fromAuth from './auth/auth-store/auth.reducer';
 import * as fromAdmin from './admin/store/admin.reducer';
 import * as fromAddHorn from './user/my-horns/add-post/store/add-post.reducer'
-import * as fromUser from './user/store/user.reducer'
+import * as fromUser from './user/store/user.reducer';
+import * as fromSearch from './user/search/store/search.reducer'
 
 
 
@@ -12,7 +13,8 @@ export interface State {
     // auth: fromAuth.AuthState,
     admin: fromAdmin.AdminState,
     addHorn: fromAddHorn.AddHornState,
-    user: fromUser.UserState
+    user: fromUser.UserState,
+    search: fromSearch.SearchState
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -20,7 +22,8 @@ export const reducers: ActionReducerMap<State> = {
     // auth: fromAuth.authReducer,
     admin: fromAdmin.adminReducer,
     addHorn: fromAddHorn.addHornReducer,
-    user: fromUser.userReducer
+    user: fromUser.userReducer,
+    search: fromSearch.searchReducer
 }
 
 export const getUiState = createFeatureSelector<fromUi.UiState>('ui');
@@ -48,3 +51,6 @@ export const clearAll = createSelector(getHornState, fromAddHorn.clearAll);
 
 export const getUserState = createFeatureSelector<fromUser.UserState>('user');
 export const getPosts = createSelector(getUserState, fromUser.getPosts);
+
+export const getSearchState = createFeatureSelector<fromSearch.SearchState>('search');
+export const getFoundPosts = createSelector(getSearchState, fromSearch.getFoundPosts)

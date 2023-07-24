@@ -1,0 +1,28 @@
+<div class="no-posts"
+    *ngIf="!(foundPosts$|async).length">
+    no posts
+</div>
+<div class="found-posts"
+    *ngIf="(foundPosts$|async).length">
+    <div class="description">
+        list of posts for:
+    </div>
+    <div class="saxophone-properties">
+        <div class="brand-name">
+            <span>brand:</span>
+            <span>{{(foundPosts$|async)[0]?.saxophone.brand.name}}</span>
+        </div>
+        <div class="sax-type">
+            <span>type:</span>
+            <span>{{(foundPosts$|async)[0]?.saxophone.saxType.name}}</span>
+        </div>
+        <div class="serial-number">
+            <span>serial number:</span>
+            <span>{{(foundPosts$|async)[0]?.saxophone.serialNumber}}</span>
+        </div>
+
+    </div>
+    <app-found-post *ngFor="let foundPost of foundPosts$|async"
+        [foundPost]="foundPost">
+    </app-found-post>
+</div>

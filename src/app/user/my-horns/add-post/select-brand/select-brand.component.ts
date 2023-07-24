@@ -37,11 +37,10 @@ export class SelectBrandComponent implements OnInit {
     }
 
     brandSelected(e) {
-        console.log(e.value)
+        //console.log(e.value)
         if (e.value != undefined) {
             const brand: Brand = e.value
             if (e) {
-                // this.brandSelected.emit(brand)
                 this.store.dispatch(new ADD_HORN.SetBrand(brand));
                 this.hornService.getTypes(brand.id)
                 this.store.dispatch(new ADD_HORN.SetSelectedSaxType(null))

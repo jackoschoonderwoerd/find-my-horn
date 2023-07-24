@@ -37,16 +37,15 @@ export class PostsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.store.subscribe(storeData => {
+            console.log(storeData)
+        })
 
         this.arraysOfPosts$ = this.store.select(fromRoot.getPosts)
 
         this.store.select(fromRoot.getPosts).subscribe((posts) => {
-            // this.store.select(fromRoot.getPosts).pipe(first()).subscribe((posts) => {
-            // console.log(posts)
-            // this.arraysOfPosts = Object.values(posts)
             this.arraysOfPosts = posts;
         })
-        this.store.subscribe(storeData => console.log(storeData))
     }
     onDeletePost(post: Post) {
         this.postsService.deletePost(post)

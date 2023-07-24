@@ -49,7 +49,7 @@ export class AuthService {
                 this.storeUserInDb(userId);
             })
             .catch((err: any) => {
-                console.log(`signing up failed'; ${err}`);
+                //console.log(`signing up failed'; ${err}`);
                 this.store.dispatch(new UI.StopLoading);
             })
     }
@@ -60,37 +60,41 @@ export class AuthService {
         const hornUserPassword = hornUser.password;
         signInWithEmailAndPassword(this.afAuth, hornUserEmail, hornUserPassword)
             .then((res: any) => {
-                console.log(res.user)
-                // console.log(`user is logged in; ${res.user}`)
+                //console.log(res.user)
+                // //console.log(`user is logged in; ${res.user}`)
                 this.store.dispatch(new UI.StopLoading);
                 // this.store.dispatch(new AUTH.IsLoggedIn(res.user))
                 this.router.navigate(['/user', { uid: res.user.uid }])
                 // this.postsService.getPostsByUserId()
             })
             .catch((err: any) => {
-                console.log(`login failed; ${err}`)
+                //console.log(`login failed; ${err}`)
                 this.store.dispatch(new UI.StopLoading);
             })
     }
     logOut() {
         this.afAuth.signOut()
             .then((res: any) => {
-                console.log(`user is signed out; ${res}`)
+                //console.log(`user is signed out; ${res}`)
 
                 this.store.dispatch(new USER.SetPosts([]))
             })
             .catch((err: any) => {
-                console.log(`signing out failed; ${err}`)
+                //console.log(`signing out failed; ${err}`)
             })
     }
     storeUserInDb(userId: string) {
-        console.log(userId);
+        //console.log(userId);
         const userData = { uid: userId, pathsToPosts: [] }
         const path = `users/${userId}`
         const usersRef = doc(this.firestore, path)
         setDoc(usersRef, userData)
-            .then((res: any) => console.log(res))
-            .catch((err: any) => console.log(err));
+            .then((res: any) => {
+                // console.log(res)
+            })
+            .catch((err: any) => {
+                console.log(err)
+            });
 
     }
 }

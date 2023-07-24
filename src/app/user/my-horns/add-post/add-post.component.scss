@@ -26,5 +26,10 @@ main {
             display: grid;
             grid-template-columns: 8rem 1fr;
         }
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
     }
 }

@@ -1,7 +1,11 @@
-form {
-    max-width: 25rem;
-    margin: auto;
+main {
     display: grid;
-    grid-template-columns: 1fr;
-    padding: 1rem;
+    grid-template-columns: 1fr 1fr;
+    form {
+        max-width: 25rem;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
 }

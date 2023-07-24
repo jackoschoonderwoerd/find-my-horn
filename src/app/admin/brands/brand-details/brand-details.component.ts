@@ -57,12 +57,14 @@ export class BrandDetailsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // console.log('brand details init')
+        // //console.log('brand details init')
         this.saxTypes = this.brandDetailService.getSaxTypes();
         this.saxTypesInUse$ = this.store.select(fromRoot.getSaxTypes)
         this.availableSaxTypes$ = this.store.select(fromRoot.getAvailableSaxTypes)
         this.store.select(fromRoot.getSaxTypes).pipe(map(
-            e => console.log(e)
+            e => {
+                // console.log(e)
+            }
         ))
     }
     onAddType() {
@@ -76,7 +78,7 @@ export class BrandDetailsComponent implements OnInit {
     }
 
     selectionChange(e) {
-        console.log(e.value);
+        //console.log(e.value);
         if (e.value !== '') {
             this.addTypeFormValid = true
         }
@@ -121,10 +123,10 @@ export class BrandDetailsComponent implements OnInit {
 
     // onAddType() {
     //     const saxType = this.saxTypesForm.value.saxType
-    //     console.log(this.saxTypesForm.value)
+    //     //console.log(this.saxTypesForm.value)
     //     this.brandDetailService.addType(this.brand.id, saxType).then((res) => {
-    //         console.log(res)
-    //     }).catch(err => console.log(err));
+    //         //console.log(res)
+    //     }).catch(err => //console.log(err));
     // }
     // onClose() {
     //     this.dialogRef.close()

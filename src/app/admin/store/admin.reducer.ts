@@ -32,7 +32,7 @@ export function adminReducer(state = initialState, action: any) {
             }
         }
         case SAX_TYPES_IN_USE: {
-            console.log(action)
+            //console.log(action)
             return {
                 ...state,
                 saxTypesInUse: action.saxTypes

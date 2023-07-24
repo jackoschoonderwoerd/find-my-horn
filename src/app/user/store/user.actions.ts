@@ -8,4 +8,5 @@ export class SetPosts implements Action {
     constructor(public posts: Post[][]) { }
 }
 
+
 export type UserActions = SetPosts

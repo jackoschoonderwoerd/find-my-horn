@@ -20,7 +20,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit(): void {
         this.store.subscribe((storeData: any) => {
-            // console.log(storeData)
+            // //console.log(storeData)
         })
     }
 }

@@ -6,7 +6,9 @@
 
 <!-- <app-single-post *ngFor="let post of posts"
     [post]="post"></app-single-post> -->
-<mat-expansion-panel hideToggle>
+<mat-expansion-panel *ngIf="posts.length"
+    hideToggle
+    expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
             <div class="saxophone">

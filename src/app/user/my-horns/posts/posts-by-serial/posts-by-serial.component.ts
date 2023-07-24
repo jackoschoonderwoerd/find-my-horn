@@ -17,6 +17,6 @@ export class PostsBySerialComponent implements OnInit {
     @Input() posts: Post[]
 
     ngOnInit(): void {
-        console.log(this.posts)
+        //console.log(this.posts)
     }
 }

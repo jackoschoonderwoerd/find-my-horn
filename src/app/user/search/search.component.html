@@ -1,30 +1,35 @@
-<form [formGroup]="form">
-    <mat-form-field>
-        <mat-label>Brand</mat-label>
-        <mat-select formControlName="brand">
-            <mat-option *ngFor="let brand of brands"
-                [value]="brand">
-                {{brand}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<main>
+    <form [formGroup]="form">
+        <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <mat-select formControlName="brand"
+                (selectionChange)=brandSelected($event)>
+                <mat-option *ngFor="let brand of brands$|async"
+                    [value]="brand">
+                    {{brand.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Type</mat-label>
-        <mat-select formControlName="type">
-            <mat-option *ngFor="let type of types"
-                [value]="type">
-                {{type}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let saxType of saxTypes$|async"
+                    [value]="saxType">
+                    {{saxType.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Serial number</mat-label>
-        <input formControlName="serialNumber"
-            matInput
-            type="text">
-    </mat-form-field>
-    <button mat-raised-button
-        (click)="onFind()">find</button>
-</form>
+        <mat-form-field>
+            <mat-label>Serial number</mat-label>
+            <input formControlName="serialNumber"
+                matInput
+                type="text">
+        </mat-form-field>
+        <button mat-raised-button
+            [disabled]="form.invalid"
+            (click)="onFind()">find</button>
+    </form>
+    <app-found-posts></app-found-posts>
+</main>

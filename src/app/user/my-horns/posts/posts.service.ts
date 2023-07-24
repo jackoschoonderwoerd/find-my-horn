@@ -29,6 +29,12 @@ import { first, last, take, map } from 'rxjs';
 import { UserData } from 'src/app/shared/models/userData.model';
 import * as USER from './../../store/user.actions'
 import { SetPosts } from '../../store/user.actions';
+import * as ADD_HORN from './../add-post/store/add-post.actions'
+import * as UI from './../../../shared/ui.actions';
+import { SaxophoneSearchCriterea as SSC } from 'src/app/shared/models/saxophone.model';
+import * as SEARCH from './../../search/store/search.actions'
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -45,47 +51,52 @@ export class PostsService {
     ) { }
 
 
-    addPost() {
-        this.store.select(fromRoot.getAddHornState).subscribe((addHornState: AddHornState) => {
-            console.log(addHornState)
-            const brand: Brand = addHornState.brand;
-            const saxType: SaxType = addHornState.saxType;
-            const serialNumber = addHornState.serialNumber;
-            const comment = addHornState.comment;
-            const dateOfPurchase = addHornState.dateOfPurchase;
-            const saxophone: Saxophone = {
-                brand: brand,
-                saxType: saxType,
-                serialNumber: serialNumber
-            }
-            const post: Post = {
-                datePosted: new Date(),
-                saxophone: saxophone,
-                dateOfPurchase: dateOfPurchase,
-                comment: comment
-            }
-            const path = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}/posts`
-            const postRef = collection(this.firestore, path)
-            this.checkForExistingSerialNumber(brand, saxType, serialNumber)
-                .then((res: any) => {
-                    console.log(res)
-                    addDoc(postRef, post).then((res) => {
-                        console.log(res)
-                        this.addPostPathToUser(brand, saxType, serialNumber)
-                    })
-                        .then((res) => {
-                            console.log(res);
-                            this.getPostsByUserId();
-                        })
-                        .catch(err => console.log(err))
+    addPost(post: Post) {
+        //console.log(post);
+        const brand = post.saxophone.brand;
+        const saxType = post.saxophone.saxType;
+        const serialNumber = post.saxophone.serialNumber
+        const path = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}/posts`
+        const postRef = collection(this.firestore, path)
+        return this.checkForExistingSerialNumber(brand, saxType, serialNumber)
+            .then((res: any) => {
+                //console.log(res)
+                addDoc(postRef, post).then((res) => {
+                    //console.log(res)
+                    this.addPostPathToUser(brand, saxType, serialNumber)
                 })
-                .catch(err => console.log(err))
-        })
-        this.clearAllAddHornFields()
+                    .then((res) => {
+                        //console.log(res);
+                        this.getPostsByUserId();
+                        this.store.dispatch(new ADD_HORN.ClearAll())
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
+
+    ifPostComplete(post: Post) {
+        if (
+            post.saxophone.brand &&
+            post.saxophone.saxType &&
+            post.saxophone.serialNumber &&
+            post.dateOfPurchase &&
+            post.comment &&
+            post.datePosted) {
+            return true
+        } else {
+            //console.log(post)
+            return false
+        }
     }
 
     addPostPathToUser(brand: Brand, saxType: SaxType, serialNumber: string) {
-        console.log('adding pathToHorn to pathsToPosts');
+        //console.log('adding pathToHorn to pathsToPosts');
         const pathToHorn = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}/posts`
         const userId = this.afAuth.currentUser.uid;
         const path = `users/${userId}`
@@ -95,9 +106,7 @@ export class PostsService {
             .catch(err => console.log(err));
     }
 
-    clearAllAddHornFields() {
 
-    }
 
     checkForExistingSerialNumber(brand: Brand, saxType: SaxType, serialNumber: string): Promise<any> {
         const path = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}`
@@ -105,7 +114,7 @@ export class PostsService {
         const fillerPromise = new Promise((resolve, reject) => {
 
             docData(serialNumberRef).subscribe((res) => {
-                console.log(res)
+                //console.log(res)
                 if (res == undefined) {
                     const filler = { my: 'my' }
                     const fillerRef = doc(this.firestore, path)
@@ -133,7 +142,7 @@ export class PostsService {
                     resolve(pathsToPosts);
 
                 } else {
-                    console.log('no paths')
+                    //console.log('no paths')
                 }
             })
         })
@@ -141,14 +150,14 @@ export class PostsService {
     }
 
     getPostsByUserId() {
-
+        this.store.dispatch(new UI.StartLoading())
         this.combinedPosts = []
-        console.log('getPostsByUserId()')
+        //console.log('getPostsByUserId()')
         this.getPostPaths()
             .then((postsPaths: string[]) => {
                 if (postsPaths) {
                     postsPaths.forEach((postsPath: string) => {
-                        console.log(postsPath)
+                        // console.log(postsPath)
                         const postsRef = collection(this.firestore, postsPath);
                         collectionData(postsRef, { idField: 'id' }).pipe(take(1))
                             .subscribe((posts: Post[]) => {
@@ -156,38 +165,36 @@ export class PostsService {
                             })
                     })
                 } else {
-                    console.log(`no horns for userId`)
+                    //console.log(`no horns for userId`)
                 }
             });
     }
 
     addPostsToCombinedPosts(posts: Post[]) {
 
-        // this.store.dispatch(new USER.SetPosts([]))
-        // this.combinedPosts = []
-        console.log(posts)
-        if (posts) {
+        if (posts.length) {
+            // console.log(posts)
             this.combinedPosts.push(posts);
-            console.log(typeof this.combinedPosts)
+            // console.log(this.combinedPosts)
             this.combinedPosts = Object.values(this.combinedPosts);
             const result = this.combinedPosts.map(arr => [...arr]);
             const uniqueArray = result.filter((value, index, self) => self.indexOf(value) === index);
-            uniqueArray.forEach((postsArray: Post[]) => {
-                console.log(postsArray)
+            uniqueArray.forEach((postsArray: any) => {
+                //console.log(postsArray)
                 postsArray.forEach((post: any) => {
-                    console.log(post.datePosted.seconds)
+                    //console.log(typeof (post.datePosted.seconds))
+                })
+                postsArray.sort((a, b) => {
+                    return a.datePosted.seconds - b.datePosted.seconds
                 })
             })
+            console.log(uniqueArray)
             this.store.dispatch(new USER.SetPosts(uniqueArray))
+            this.store.dispatch(new UI.StopLoading())
         }
     }
 
-    // getPostsByPostpath(postPath: string) {
-    //     const postsRef = collection(this.firestore, postPath)
-    //     collectionData(postsRef).pipe(first()).subscribe((posts: Post[]) => {
-    //         console.log(posts)
-    //     })
-    // }
+
 
 
 
@@ -196,11 +203,11 @@ export class PostsService {
         const saxType = post.saxophone.saxType;
         const serialNumber = post.saxophone.serialNumber;
         const pathToPost = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}/posts/${post.id}`
-        console.log(pathToPost);
+        //console.log(pathToPost);
         const docRef = doc(this.firestore, pathToPost)
         return deleteDoc(docRef)
             .then(res => {
-                console.log(res)
+                //console.log(res)
                 this.getPostsByUserId()
                 this.removePathFromUserPathsToPosts(pathToPost)
 
@@ -208,56 +215,25 @@ export class PostsService {
             .catch(err => console.log(err));
     }
 
-    // removePathFromUserPathsToPosts(postsPath: string) {
-    //     // console.log(post);
-    //     // const brandId: string = post.saxophone.brand.id;
-    //     // const saxTypeId: string = post.saxophone.saxType.id;
-    //     // const serialNumber: string = post.saxophone.serialNumber;
-    //     const userId: string = this.afAuth.currentUser.uid;
-
-    //     console.log(userId)
-
-    //     // const postsPath = `saxes/${brandId}/saxTypes/${saxTypeId}/serialNumbers/${serialNumber}/posts`
-    //     const path = `users/${userId}`
-
-    //     const userRef = doc(this.firestore, path)
-    //     docData(userRef).subscribe((userData: any) => {
-    //         const pathsToPosts: string[] = userData.pathsToPosts
-    //         console.log(pathsToPosts);
-    //     })
-    // }
-
-    // saxes/87pduTFlr2S64dmaSi7G/saxTypes/RoXhhMkbegOxO0gxtjlv/serialNumbers/123456/posts
 
     removePathFromUserPathsToPosts(pathToPost: string) {
-        console.log(pathToPost)
+        //console.log(pathToPost)
         const userId = this.afAuth.currentUser.uid;
         const userDataPath = `users/${userId}`;
         const userDataRef = doc(this.firestore, userDataPath);
         docData(userDataRef).subscribe((userData: any) => {
-            console.log(userData)
-            console.log(userData.pathsToPosts)
+            //console.log(userData)
+            //console.log(userData.pathsToPosts)
         })
-        // const pathToUserPathsToPostsArrayRef = doc(this.firestore, pathToUserPathsToPostsArray);
-        // updateDoc(pathToUserPathsToPostsArrayRef, arrayRemove({'':''}))
-        // docData(docRef).pipe(take(1)).subscribe(data => {
-        //     console.log(data)
-        //     let pathsToPosts: string[] = data.pathsToPosts
-        //     let newPathsToPosts = pathsToPosts.filter((path: string) => {
-        //         return path == pathToPost
-        //     })
-        //     console.log(newPathsToPosts)
-        //     updateDoc(docRef, { pathsToPosts: newPathsToPosts })
-        //         .then((res: any) => {
-        //             console.log(res)
-        //             this.store.subscribe((storeData: any) => {
-        //                 console.log(storeData.user);
-        //                 this.getPostsByUserId();
-        //             })
-        //         })
-        //         .catch(err => console.log(err))
-        // })
-    }
 
+    }
+    findPostsBySsc(ssc: SSC) {
+        const path = `saxes/${ssc.brand.id}/saxTypes/${ssc.saxType.id}/serialNumbers/${ssc.serialNumber}/posts`;
+        const docRef = collection(this.firestore, path);
+        collectionData(docRef).subscribe((posts: Post[]) => {
+            //console.log(posts);
+            this.store.dispatch(new SEARCH.SetFoundPosts(posts));
+        })
+    }
 
 }

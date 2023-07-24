@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
         this.isLoading$ = this.store.select(fromRoot.getIsLoading)
         this.store.subscribe((data) => {
-            console.log(data)
+            //console.log(data)
         })
         this.initForm()
     }
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         })
     }
     onSubmit() {
-        console.log(this.form.value)
+        //console.log(this.form.value)
         const hornUser: HornUser = {
             name: this.form.value.name,
             email: this.form.value.email,

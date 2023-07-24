@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
         })
     }
     onSubmit() {
-        console.log(this.form.value)
+        //console.log(this.form.value)
         const hornUser: HornUser = {
             name: this.form.value.name,
             email: this.form.value.email,

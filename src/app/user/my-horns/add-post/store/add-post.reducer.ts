@@ -28,7 +28,7 @@ const initialState: AddHornState = {
 export function addHornReducer(state = initialState, action: any) {
     switch (action.type) {
         case SELECTED_BRAND: {
-            console.log(action.brand)
+            //console.log(action.brand)
             return {
                 ...state,
                 brand: action.brand
@@ -41,6 +41,7 @@ export function addHornReducer(state = initialState, action: any) {
             }
         }
         case SERIAL_NUMBER: {
+            //console.log(action)
             return {
                 ...state,
                 serialNumber: action.serialNumber
@@ -59,7 +60,7 @@ export function addHornReducer(state = initialState, action: any) {
             }
         }
         case CLEAR_ALL: {
-            console.log(action)
+            //console.log(action)
             return {
                 ...state,
                 brand: null,

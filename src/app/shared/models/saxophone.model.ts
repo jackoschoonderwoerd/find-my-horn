@@ -14,7 +14,7 @@ export interface Saxophone {
 }
 
 export interface SaxophoneSearchCriterea {
-    brand: string;
-    type: string;
+    brand: Brand;
+    saxType: SaxType;
     serialNumber: string;
 }

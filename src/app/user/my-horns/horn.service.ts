@@ -33,6 +33,7 @@ import { Auth } from '@angular/fire/auth';
 import { BRAND } from '../../admin/store/admin.actions';
 import * as USER from './../../user/store/user.actions'
 import { UserData } from 'src/app/shared/models/userData.model';
+import * as SEARCH from './../search/store/search.actions'
 
 
 @Injectable({
@@ -67,18 +68,18 @@ export class HornService {
     }
 
     getTypes(brandId: string) {
-        // return this.types
+        //console.log(brandId)
         const path = `saxes/${brandId}/saxTypes`;
         const typesRef = collection(this.firestore, path)
         collectionData(typesRef, { idField: 'id' }).subscribe((saxTypes: SaxType[]) => {
-            console.log(saxTypes)
+            //console.log(saxTypes)
             this.store.dispatch(new ADMIN.SetAvailableSaxTypes(saxTypes));
         })
     }
 
     readHorn() {
         this.store.subscribe(storeData => {
-            console.log(storeData)
+            //console.log(storeData)
             const brand: Brand = storeData.addHorn.brand;
             const saxType: SaxType = storeData.addHorn.saxType;
             const serialNumber = storeData.addHorn.serialNumber;
@@ -86,17 +87,9 @@ export class HornService {
 
             const path = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}`
             const saxRef = doc(this.firestore, path)
-            docData(saxRef).subscribe(data => console.log(data))
+            docData(saxRef).subscribe(data => {
+                // console.log(data)
+            })
         });
     }
-
-
-
-
-
-
-
-
-
-
 }

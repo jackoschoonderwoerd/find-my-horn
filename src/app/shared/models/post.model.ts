@@ -9,6 +9,15 @@ export interface Post {
     comment: string
 }
 
+export interface PostDateToAny {
+    id?: string;
+    datePosted: any;
+    saxophone: Saxophone;
+    ownerId?: string;
+    dateOfPurchase?: any;
+    comment: string;
+}
+
 export interface CombinedPosts {
     combinedPosts: Post[][];
 }

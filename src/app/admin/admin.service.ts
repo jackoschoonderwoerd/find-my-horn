@@ -38,7 +38,7 @@ export class AdminService {
         const path = 'saxes'
         const saxesRef = collection(this.firestore, path)
         collectionData(saxesRef, { idField: 'id' }).subscribe((data: Brand[]) => {
-            // console.log(data)
+            // //console.log(data)
             this.store.dispatch(new ADMIN.SetBrands(data))
         }
         )
@@ -47,25 +47,27 @@ export class AdminService {
     addBrand(newBrand: any) {
         return this.checkForExistingBrandName(newBrand)
             .then(res => {
-                console.log(res)
+                //console.log(res)
                 if (res) {
                     const path = 'saxes'
                     const brandRef = collection(this.firestore, path)
                     return addDoc(brandRef, newBrand)
                 }
             })
-            .catch(err => { console.log(err) })
+            .catch(err => {
+                //console.log(err)
+            })
     }
 
     checkForExistingBrandName(newBrand: Brand) {
-        console.log(newBrand)
+        //console.log(newBrand)
         const exists = new Promise((resolve, reject) => {
             this.store.select(fromRoot.getBrands).pipe(first()).subscribe((brands: Brand[]) => {
-                console.log(brands)
+                //console.log(brands)
                 const index = brands.findIndex((brand: Brand) => {
                     return brand.name === newBrand.name
                 })
-                console.log(index)
+                //console.log(index)
                 if (index != -1) {
                     resolve(false)
                 } else {
@@ -85,15 +87,19 @@ export class AdminService {
     }
 
     updateBrand(brand: Brand) {
-        console.log('updating brand')
+        //console.log('updating brand')
         const path = `saxes/${brand.id}`
         const brandRef = doc(this.firestore, path)
-        setDoc(brandRef, brand).then(data => console.log(data))
+        setDoc(brandRef, brand).then(data => {
+            // console.log(data)
+        })
     }
     deleteBrand(id: string) {
-        console.log('deleting brand')
+        //console.log('deleting brand')
         const path = `saxes/${id}`
         const brandRef = doc(this.firestore, path)
-        deleteDoc(brandRef).then(data => console.log(data))
+        deleteDoc(brandRef).then(data => {
+            // console.log(data)
+        })
     }
 }

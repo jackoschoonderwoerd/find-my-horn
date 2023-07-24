@@ -1,20 +1,35 @@
-<div class="post">
-    <!-- <div class="post-id"><span>post id:</span>{{postDateToAny.id}}</div>
-    <div class="date-posted"><span>date posted:</span>{{postDateToAny.datePosted.toDate()|date}}</div>
-    <div class="dop"><span>date of purcahse:</span>{{postDateToAny.dateOfPurchase.toDate()|date}}</div>
-    <div class="comment"><span>comment:</span>{{post.comment}}</div> -->
-</div>
-<mat-expansion-panel hideToggle>
+<mat-expansion-panel hideToggle
+    expanded="true"
+    [class.isOwnedByUser]="currentUserId === postDateToAny.ownerId">
     <mat-expansion-panel-header>
         <mat-panel-title>
-            <div class="date-posted"><span>date posted:</span>{{postDateToAny.datePosted.toDate()|date}}</div>
+            <div class="date-posted">
+                <div class="uid">uid: {{currentUserId}}</div>
+                <div class="ownerId">oid: {{postDateToAny.ownerId}}</div>
+                <span>date posted:</span>
+                {{postDateToAny.datePosted.toDate()|date|date:'short'}}
+            </div>
+            <div class="buttons">
+                <button *ngIf="currentUserId === postDateToAny.ownerId"
+                    class="delete"
+                    mat-mini-fab
+                    color="warn"
+                    (click)="onDeletePost($event)">
+                    <mat-icon aria-hidden="false"
+                        aria-label="Example delete icon"
+                        fontIcon="delete"></mat-icon>
+                </button>
+            </div>
         </mat-panel-title>
-        <!-- <mat-panel-description>
-            This is a summary of the content
-        </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <div class="post-id"><span>post id:</span>{{postDateToAny.id}}</div>
-    <!-- <div class="date-posted"><span>date posted:</span>{{postDateToAny.datePosted.toDate()|date}}</div> -->
-    <div class="dop"><span>date of purcahse:</span>{{postDateToAny.dateOfPurchase.toDate()|date}}</div>
-    <div class="comment"><span>comment:</span>{{post.comment}}</div>
+    <div class="content">
+        saxophone
+        <div class="post-id"><span>post id:</span>{{postDateToAny.id}}</div>
+        <div class="dop">
+            <span>date of purcahse:</span>
+            {{postDateToAny.dateOfPurchase.toDate()|date}}
+        </div>
+        <div class="comment"><span>comment:</span>{{post.comment}}</div>
+    </div>
+
 </mat-expansion-panel>

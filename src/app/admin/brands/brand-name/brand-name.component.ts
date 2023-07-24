@@ -47,7 +47,7 @@ export class BrandNameComponent implements OnInit {
         const brandName = this.brandNameForm.value;
         this.adminService.addBrand(brandName)
             .then((res: any) => {
-                console.log(res)
+                //console.log(res)
                 this.snackbar.open('brand name added', ' OK')
                 this.brandNameForm.reset();
             })

@@ -1,0 +1,22 @@
+mat-expansion-panel {
+    border: 1px solid black;
+    // background-color: wheat;
+    mat-expansion-panel-header {
+        // background-color: wheat;
+        // border: 1px solid black;
+        mat-panel-title {
+            // display: grid;
+            // grid-template-columns: 1fr auto;
+            justify-content: space-between;
+            .date-posted {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 1rem;
+            }
+        }
+    }
+}
+
+.isOwnedByUser {
+    background-color: wheat;
+}
