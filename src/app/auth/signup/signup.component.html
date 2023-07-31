@@ -1,7 +1,12 @@
 <form *ngIf="!(isLoading$|async)"
     [formGroup]="form">
 
-
+    <mat-label>user name</mat-label>
+    <mat-form-field>
+        <input matInput
+            formControlName="userName"
+            type="text">
+    </mat-form-field>
 
     <mat-label>email</mat-label>
     <mat-form-field>

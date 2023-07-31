@@ -1,14 +1,17 @@
-<form [formGroup]="serialNumberForm">
-    <mat-form-field>
-        <mat-label>enter serial number</mat-label>
-        <input formControlName="serialNumber"
-            type="text"
-            matInput>
-    </mat-form-field>
-    <button class="confirm-serial-number"
-        mat-fab
-        color="primary"
-        (click)="onConfirmSerialNumber()">
-        confirm serial number
-    </button>
-</form>
+<main>
+
+    <form [formGroup]="serialNumberForm">
+        <mat-form-field>
+            <mat-label>enter serial number</mat-label>
+            <input formControlName="serialNumber"
+                type="text"
+                matInput>
+        </mat-form-field>
+        <button class="confirm-serial-number"
+            mat-raised-button
+            color="primary"
+            (click)="onConfirmSerialNumber()">
+            confirm serial number
+        </button>
+    </form>
+</main>

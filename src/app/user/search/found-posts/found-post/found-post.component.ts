@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Post, PostDateToAny } from 'src/app/shared/models/post.model';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
     selector: 'app-found-post',
@@ -14,10 +15,16 @@ import { Post, PostDateToAny } from 'src/app/shared/models/post.model';
 export class FoundPostComponent implements OnInit {
 
     foundPostDateToAny: PostDateToAny
-
+    ownsPost: Boolean
     @Input() foundPost: Post
 
+
+    constructor(
+        public afAuth: Auth
+    ) { }
+
     ngOnInit(): void {
+        this.ownsPost = this.afAuth.currentUser.uid === this.foundPost.ownerId
         this.foundPostDateToAny = {
 
             id: this.foundPost.id,

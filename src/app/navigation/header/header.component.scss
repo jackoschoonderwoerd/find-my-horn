@@ -2,8 +2,26 @@ mat-toolbar {
     display: flex;
     // grid-template-columns: repeat(10 1fr);
     gap: 1rem;
+    .hide-mobile {
+        display: flex;
+        gap: 1rem;
+    }
 }
 
 .router-link-active {
     color: red;
 }
+
+@media only screen and (max-width: 600px) {
+    .hideMobile {
+        // visibility: hidden;
+        display: none;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .showMobile {
+        // visibility: hidden;
+        display: none;
+    }
+}
+// <mat-icon>library_books</mat-icon>

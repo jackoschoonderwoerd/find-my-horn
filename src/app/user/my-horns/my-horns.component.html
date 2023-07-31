@@ -1,8 +1,6 @@
 <main class="component-container">
     <div class="posts">
         <app-posts *ngIf="!(isLoading$|async)"></app-posts>
-
-        <!-- <mat-spinner *ngIf="isLoading$|async"></mat-spinner> -->
         <div class="spinner"
             *ngIf="isLoading$|async">
 

@@ -11,17 +11,29 @@ import { AdminService } from './admin/admin.service';
 import { HornService } from './user/my-horns/horn.service';
 import { User as FirebaseUser } from "@angular/fire/auth";
 import { PostsService } from './user/my-horns/posts/posts.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidenavComponent } from './navigation/sidenav/sidenav.component';
 
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        HeaderComponent,
+        SidenavComponent,
+        FooterComponent,
+        MatToolbarModule,
+        MatSidenavModule
+    ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
     title = 'find-my-horn';
+    openSidenav: boolean = false;
 
     constructor(
         private store: Store<{ ui: fromRoot.State }>,
@@ -35,12 +47,17 @@ export class AppComponent implements OnInit {
         const auth = getAuth()
         onAuthStateChanged(auth, (user: FirebaseUser) => {
             if (user) {
-                this.postsService.getPostsByUserId()
-                // this.store.dispatch(new AUTH.IsLoggedIn(user))
+                console.log(user.uid)
+                const userId = user.uid
+                this.postsService.getPostsPathsByUid(userId);
             } else {
                 this.router.navigateByUrl('log-in')
             }
         })
         this.adminService.readBrandNames()
+    }
+    openSidenavFunc() {
+        console.log('say hi')
+        this.openSidenav = !this.openSidenav;
     }
 }

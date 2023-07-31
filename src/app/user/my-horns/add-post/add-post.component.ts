@@ -26,6 +26,8 @@ import { DateOfPurchaseComponent } from './date-of-purchase/date-of-purchase.com
 import { CommentComponent } from './comment/comment.component';
 import { PostsService } from '../posts/posts.service';
 import { AddHornState } from './store/add-post.reducer';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { BrandNameComponent } from 'src/app/admin/brands/brand-name/brand-name.component';
 
 
 
@@ -34,21 +36,22 @@ import { AddHornState } from './store/add-post.reducer';
     selector: 'app-add-post',
     standalone: true,
     imports: [
+        CommentComponent,
         CommonModule,
-        MatButtonModule,
-        ReactiveFormsModule,
+        DateOfPurchaseComponent,
+        DatePipe,
         FormsModule,
-        MatSelectModule,
+        MatButtonModule,
+        MatDatepickerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatDatepickerModule,
         MatNativeDateModule,
+        MatSelectModule,
+        ReactiveFormsModule,
         SelectBrandComponent,
         SelectTypeComponent,
         SerialNumberComponent,
-        DateOfPurchaseComponent,
-        DatePipe,
-        CommentComponent
+        MatDialogModule,
     ],
     templateUrl: './add-post.component.html',
     styleUrls: ['./add-post.component.scss']
@@ -70,6 +73,13 @@ export class AddPostComponent implements OnInit {
     postInComplete: boolean = true;
     post: Post;
 
+    brand: Brand;
+    saxType: SaxType;
+    serialNumber: string;
+    dateOfPurchase: Date;
+    comment: string;
+
+
     @ViewChild('appSelectBrand', { static: false }) appSelectBrandComponent: SelectBrandComponent;
     @ViewChild('appSelectType', { static: false }) appSelectTypeComponent: SelectTypeComponent;
     @ViewChild('appDateOfPurchase', { static: false }) appDateOfPurchaseComponent: DateOfPurchaseComponent;
@@ -83,7 +93,8 @@ export class AddPostComponent implements OnInit {
         private hornService: HornService,
         private store: Store<fromRoot.State>,
         private afAuth: Auth,
-        private postsService: PostsService
+        private postsService: PostsService,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -95,23 +106,23 @@ export class AddPostComponent implements OnInit {
         })
         this.store.select(fromRoot.getAddHornState).subscribe((addHornState: AddHornState) => {
             //console.log(addHornState)
-            const brand = addHornState.brand;
-            const saxType = addHornState.saxType;
-            const serialNumber = addHornState.serialNumber;
-            const dop = addHornState.dateOfPurchase;
-            const comment = addHornState.comment;
-            if (brand && saxType && serialNumber && dop && comment) {
+            this.brand = addHornState.brand;
+            this.saxType = addHornState.saxType;
+            this.serialNumber = addHornState.serialNumber;
+            this.dateOfPurchase = addHornState.dateOfPurchase;
+            this.comment = addHornState.comment;
+            if (this.brand && this.saxType && this.serialNumber && this.dateOfPurchase && this.comment) {
                 const saxophone: Saxophone = {
-                    brand: addHornState.brand,
-                    saxType: addHornState.saxType,
-                    serialNumber: addHornState.serialNumber
+                    brand: this.brand,
+                    saxType: this.saxType,
+                    serialNumber: this.serialNumber
                 }
                 this.post = {
                     datePosted: new Date(),
                     saxophone: saxophone,
                     ownerId: this.afAuth.currentUser.uid,
-                    dateOfPurchase: dop,
-                    comment: comment
+                    dateOfPurchase: this.dateOfPurchase,
+                    comment: this.comment
                 }
                 //console.log(`post complete ${this.post}`)
                 this.postInComplete = false;
@@ -127,13 +138,28 @@ export class AddPostComponent implements OnInit {
         })
         this.addHornState$ = this.store.select(fromRoot.getAddHornState);
     }
+    onSelectBrand() {
+        this.dialog.open(SelectBrandComponent)
+    }
+    onSelectSaxType() {
+        this.dialog.open(SelectTypeComponent)
+    }
+    onAddSerialNumber() {
+        this.dialog.open(SerialNumberComponent)
+    }
+    onAddDateOfPurchase() {
+        this.dialog.open(DateOfPurchaseComponent)
+    }
+    onAddComment() {
+        this.dialog.open(CommentComponent)
+    }
 
     onClearForm() {
         //console.log('onClearAll()')
         // this.store.dispatch(new ADD_HORN.ClearAll)
-        this.appSelectBrandComponent.clear()
-        this.appSelectTypeComponent.clear()
-        this.appDateOfPurchaseComponent.clear()
+        // this.appSelectBrandComponent.clear()
+        // this.appSelectTypeComponent.clear()
+        // this.appDateOfPurchaseComponent.clear()
 
     }
     onClearPostFromStore() {

@@ -10,6 +10,8 @@ import { PostsService } from '../../posts.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { WarningComponent } from 'src/app/shared/warning/warning.component';
 import { Auth } from '@angular/fire/auth';
+import { DateOfPurchaseComponent } from '../../../add-post/date-of-purchase/date-of-purchase.component';
+import { CommentComponent } from '../../../add-post/comment/comment.component';
 
 
 // export interface PostDateToAny {
@@ -39,14 +41,17 @@ export class SinglePostComponent implements OnInit {
     @Input() post: Post
     postDateToAny: PostDateToAny;
     currentUserId: string;
+    ownsPost: boolean = false
 
     constructor(
         private postsService: PostsService,
         private dialog: MatDialog,
-        private afAuth: Auth
+        private afAuth: Auth,
+
     ) {
     }
     ngOnInit(): void {
+        this.ownsPost = this.afAuth.currentUser.uid === this.post.ownerId;
         this.postDateToAny = {
             id: this.post.id,
             datePosted: this.post.datePosted,
@@ -57,8 +62,8 @@ export class SinglePostComponent implements OnInit {
         }
         this.currentUserId = this.afAuth.currentUser.uid;
     }
-    onDeletePost(e) {
-        e.preventDefault()
+    onDeletePost() {
+
         const dialogRef = this.dialog.open(WarningComponent, {
             data: {
                 message: 'this will permanently delete this post'
@@ -71,6 +76,38 @@ export class SinglePostComponent implements OnInit {
                         // console.log(res)
                     })
                     .catch(err => console.log(err));
+            }
+        })
+    }
+
+    onEditDateOfPurchase() {
+        const dialogRef = this.dialog.open(DateOfPurchaseComponent, {
+            data: {
+                dateOfPurchase: this.post.dateOfPurchase
+            }
+        })
+        dialogRef.afterClosed().subscribe((res: any) => {
+            if (res) {
+
+            }
+        })
+    }
+    onEditComment() {
+        const dialogRef = this.dialog.open(CommentComponent, {
+            data: {
+                comment: this.post.comment
+            }
+        })
+        dialogRef.afterClosed().subscribe((comment: string) => {
+            if (comment) {
+                this.postsService.updatePostComment(this.post, comment)
+                    .then((res: any) => {
+                        console.log('comment updated');
+                        // this.postsService.getPostsByUserId();
+                    })
+                    .catch(err => {
+                        console.log(`failed to update comment; ${err}`)
+                    });
             }
         })
     }

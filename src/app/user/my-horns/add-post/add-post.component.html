@@ -1,15 +1,32 @@
 <main>
-    <div class="left">
-        <div class="header">create post</div>
-        <app-select-brand #appSelectBrand></app-select-brand>
-        <app-select-type #appSelectType></app-select-type>
-        <app-serial-number></app-serial-number>
-        <app-date-of-purchase #appDateOfPurchase></app-date-of-purchase>
-        <app-comment></app-comment>
-        <button class="clear-all"
-            mat-raised-button
-            (click)="onClearForm()">clear form</button>
+    <div class="buttons">
+        <button mat-raised-button
+            color="primary"
+            class="brand"
+            (click)="onSelectBrand()">select brand</button>
+        <button mat-raised-button
+            *ngIf="this.brand"
+            color="primary"
+            class="saxType"
+            (click)="onSelectSaxType()">select type</button>
+        <button mat-raised-button
+            *ngIf="this.brand && this.saxType"
+            color="primary"
+            class="serial-number"
+            (click)="onAddSerialNumber()">add serial number</button>
+        <button mat-raised-button
+            *ngIf="this.brand && this.saxType && this.serialNumber && this.serialNumber!='' "
+            color="primary"
+            class="dop"
+            (click)="onAddDateOfPurchase()">select date of purchase</button>
+        <button mat-raised-button
+            *ngIf="this.brand && this.saxType && this.serialNumber && this.serialNumber!='' && this.dateOfPurchase"
+            color="primary"
+            class="comment"
+            (click)="onAddComment()">add comment</button>
     </div>
+
+
     <div class="right">
         <div class="header">post</div>
         <div class="brand-name horn-property"><span>brand</span>
@@ -40,10 +57,10 @@
                 color="primary">add post</button>
             <button mat-raised-button
                 class="clear-post"
-                (click)="onClearPostFromStore()">clear post from store</button>
+                (click)="onClearPostFromStore()">clear (post from store)</button>
         </div>
     </div>
-    <pre>
+    <!-- <pre>
         {{addHornState$|async|json}}
-    </pre>
+    </pre> -->
 </main>

@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import * as ADD_HORN from './../store/add-post.actions'
 import { HornService } from '../../horn.service';
 import { MatOption } from '@angular/material/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -16,7 +18,9 @@ import { MatOption } from '@angular/material/core';
     standalone: true,
     imports: [CommonModule,
         MatSelectModule,
-        MatFormFieldModule],
+        MatFormFieldModule,
+        MatButtonModule
+    ],
     templateUrl: './select-brand.component.html',
     styleUrls: ['./select-brand.component.scss']
 })
@@ -29,7 +33,8 @@ export class SelectBrandComponent implements OnInit {
 
     constructor(
         private store: Store<fromRoot.State>,
-        private hornService: HornService
+        private hornService: HornService,
+        private dialogRef: MatDialogRef<SelectBrandComponent>
     ) { }
 
     ngOnInit(): void {
@@ -44,6 +49,7 @@ export class SelectBrandComponent implements OnInit {
                 this.store.dispatch(new ADD_HORN.SetBrand(brand));
                 this.hornService.getTypes(brand.id)
                 this.store.dispatch(new ADD_HORN.SetSelectedSaxType(null))
+                this.dialogRef.close();
             }
         }
     }

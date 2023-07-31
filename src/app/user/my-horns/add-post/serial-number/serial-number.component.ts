@@ -8,6 +8,7 @@ import * as ADD_HORN from '../store/add-post.actions';
 import * as fromRoot from './../../../../app.reducer';
 import { Store } from '@ngrx/store';
 import { HornService } from '../../horn.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-serial-number',
@@ -30,7 +31,8 @@ export class SerialNumberComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private store: Store<fromRoot.State>,
-        private hornService: HornService
+        private hornService: HornService,
+        private dialogRef: MatDialogRef<SerialNumberComponent>
     ) { }
 
     ngOnInit(): void {
@@ -44,5 +46,6 @@ export class SerialNumberComponent implements OnInit {
     onConfirmSerialNumber() {
         const serialNumber = this.serialNumberForm.value.serialNumber;
         this.store.dispatch(new ADD_HORN.SetSerialNumber(serialNumber));
+        this.dialogRef.close();
     }
 }

@@ -1,4 +1,9 @@
-mat-form-field {
+main {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    mat-form-field {
+        display: grid;
+        grid-template-columns: auto;
+    }
 }

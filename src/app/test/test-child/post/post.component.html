@@ -1,0 +1,60 @@
+<main>
+    <div class="saxophone-properties"
+        *ngIf="index === 0">
+        <div>{{post.saxophone.brand.name}}</div>
+        <div>{{post.saxophone.saxType.name}}</div>
+        <div>{{post.saxophone.serialNumber}}</div>
+
+    </div>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <div class="">posted:</div>
+                <div>{{postDateToAny.datePosted.toDate()|date}}</div>
+            </mat-panel-title>
+            <mat-panel-description>
+                <button class="delete"
+                    *ngIf="ownesPost"
+                    mat-mini-fab
+                    color="warn"
+                    (click)="onDeletePost()">
+                    <mat-icon aria-hidden="false"
+                        aria-label="Example delete icon"
+                        fontIcon="delete"></mat-icon>
+                </button>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="post-content">
+            <div class="owner-id">
+                <span>owner id:</span>
+                <span>{{post.ownerId}}</span>
+            </div>
+            <div class="post-id">
+                <span>post id:</span>
+                <span>{{post.id}}</span>
+
+            </div>
+            <div class="comment">
+                <div class="comment-content">
+                    <div>comment:</div>
+                    <div>{{post.comment}}</div>
+                </div>
+                <button mat-mini-fab
+                    *ngIf=" afAuth.currentUser && post.ownerId === afAuth.currentUser.uid"
+                    (click)="onEditComment(post)"
+                    color="primary">
+                    <mat-icon aria-hidden="false"
+                        aria-label="Example home icon"
+                        fontIcon="edit"></mat-icon>
+                </button>
+
+            </div>
+            <div class="date-of-purchase">
+                <span>date of purchase:</span>
+                <span>{{postDateToAny.dateOfPurchase.toDate()|date}}</span>
+
+            </div>
+        </div>
+    </mat-expansion-panel>
+</main>
+<!-- {{post|json}} -->

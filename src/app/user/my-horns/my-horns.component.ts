@@ -6,7 +6,7 @@ import { HornService } from './horn.service';
 import { PostsComponent } from './posts/posts.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
-import * as fromRoot from './../../app.reducer'
+import * as fromRoot from '../../app.reducer'
 import { Store } from '@ngrx/store';
 
 

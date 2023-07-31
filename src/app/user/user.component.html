@@ -1,9 +1,6 @@
-<mat-tab-group>
-    <mat-tab label="My Horns">
-        <app-my-horns></app-my-horns>
-    </mat-tab>
-    <mat-tab label="Search horn">
-        <app-search></app-search>
-    </mat-tab>
-
-</mat-tab-group>
+<main>
+    <pre class="horn-user">{{hornUser$|async|json}}</pre>
+    <hr>
+    <pre class="user">{{user|json}}</pre>
+</main>
+<hr>

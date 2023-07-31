@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyHornsComponent } from './my-horns.component';
+import { MyHornsComponent } from './my-horns.component.ts';
 
 describe('MyHornsComponent', () => {
-  let component: MyHornsComponent;
-  let fixture: ComponentFixture<MyHornsComponent>;
+    let component: MyHornsComponent;
+    let fixture: ComponentFixture<MyHornsComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [MyHornsComponent]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [MyHornsComponent]
+        });
+        fixture = TestBed.createComponent(MyHornsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(MyHornsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

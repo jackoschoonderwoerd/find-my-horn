@@ -1,11 +1,17 @@
-<mat-form-field>
-    <mat-label>Date of purchase</mat-label>
-    <input #matInputRef
-        matInput
-        [matDatepicker]="picker"
-        (dateInput)="onDateChanged($event.target.value)">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix
-        [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+<main>
+    <form [formGroup]="form">
+
+        <mat-form-field>
+            <mat-label>Date of purchase</mat-label>
+            <input #matInputRef
+                formControlName="dateOfPurchase"
+                matInput
+                [matDatepicker]="picker"
+                (dateInput)="onDateChanged($event.target.value)">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix
+                [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </form>
+</main>

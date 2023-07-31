@@ -1,13 +1,19 @@
-<form [formGroup]="commentForm">
-    <mat-form-field class="example-full-width">
-        <mat-label>add comment</mat-label>
-        <textarea formControlName="comment"
-            matInput
-            placeholder="add comment"></textarea>
-    </mat-form-field>
-    <button mat-fab
-        [disabled]="commentForm.invalid"
-        color="primary"
-        class="submit-comment"
-        (click)="onSubmit()">submit comment</button>
-</form>
+<main>
+    <form [formGroup]="commentForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>comment</mat-label>
+            <textarea formControlName="comment"
+                matInput
+                placeholder="add comment"></textarea>
+        </mat-form-field>
+        <button mat-raised-button
+            [disabled]="commentForm.invalid"
+            color="primary"
+            class="submit-comment"
+            (click)="onAddComment()">{{editmode ? 'update comment' : 'add comment'}}</button>
+        <button mat-raised-button
+            (click)="onCancel()"
+            color="primary"
+            class="cancel">cancel</button>
+    </form>
+</main>

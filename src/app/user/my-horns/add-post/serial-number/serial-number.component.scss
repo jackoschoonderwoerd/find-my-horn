@@ -1,6 +1,11 @@
-form {
+main {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
-    align-items: center;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        align-items: center;
+    }
 }

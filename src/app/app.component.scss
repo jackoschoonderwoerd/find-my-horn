@@ -1,6 +1,9 @@
-.main {
-    height: 100vh;
-    // border: 3px solid red;
+mat-sidenav-container,
+// mat-sidenav-content,
+mat-sidenav {
+    height: 100%;
+}
+mat-sidenav-content {
     display: grid;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: 4rem auto 3rem;
 }

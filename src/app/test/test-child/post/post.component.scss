@@ -1,0 +1,35 @@
+main {
+    .saxophone-properties {
+        padding: 1rem;
+        div {
+            word-wrap: break-word;
+        }
+    }
+    mat-expansion-panel {
+        mat-expansion-panel-header {
+            mat-panel-title {
+                min-width: 10rem;
+                display: grid;
+                grid-template-columns: 4rem auto;
+                // border: 1px solid green;
+            }
+            mat-panel-description {
+                // border: 1px solid blue;
+                // display: grid;
+                // grid-template-columns: auto 1fr;
+                justify-content: right;
+            }
+        }
+        .post-content {
+            background-color: wheat;
+            padding: 1rem;
+            .comment {
+                display: grid;
+                grid-template-columns: auto 3rem;
+                // justify-content: center;
+                border: 1px solid black;
+                align-items: center;
+            }
+        }
+    }
+}

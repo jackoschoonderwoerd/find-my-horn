@@ -4,13 +4,15 @@ import {
     Auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    updateProfile,
     setPersistence,
     browserSessionPersistence,
     user,
     signOut,
     getAuth,
     onAuthStateChanged,
-    User
+    User,
+    UserCredential
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -21,6 +23,7 @@ import { Firestore, addDoc, collection, doc, setDoc } from '@angular/fire/firest
 import { HornService } from '../user/my-horns/horn.service';
 import { PostsService } from '../user/my-horns/posts/posts.service';
 import * as USER from './../user/store/user.actions'
+import { User as FirebaseUser } from '@angular/fire/auth';
 
 @Injectable({
     providedIn: 'root'
@@ -36,39 +39,50 @@ export class AuthService {
         private postsService: PostsService
     ) { }
 
-    signUp(hornUser: HornUser) {
+    signUp(hornUser: HornUser): void {
+        console.log(hornUser);
         const hornUserName = hornUser.name;
         const hornUserEmail = hornUser.email;
         const hornUserPassword = hornUser.password;
         this.store.dispatch(new UI.StartLoading());
         createUserWithEmailAndPassword(this.afAuth, hornUserEmail, hornUserPassword)
-            .then((res: any) => {
+
+            .then((userCredential: UserCredential) => {
+                console.log(userCredential.user)
+                if (this.afAuth.currentUser != null) {
+                    updateProfile(userCredential.user, {
+                        displayName: hornUserName
+                    })
+                }
                 this.store.dispatch(new UI.StopLoading);
-                // this.store.dispatch(new AUTH.IsLoggedIn(res))
-                const userId = res.user.uid
+                const userId = userCredential.user.uid
                 this.storeUserInDb(userId);
             })
             .catch((err: any) => {
-                //console.log(`signing up failed'; ${err}`);
+                console.log(`signing up failed'; ${err}`);
                 this.store.dispatch(new UI.StopLoading);
             })
     }
     logIn(hornUser: HornUser) {
+        console.log(hornUser)
         this.store.dispatch(new UI.StartLoading());
         const hornUserName = hornUser.name;
         const hornUserEmail = hornUser.email;
         const hornUserPassword = hornUser.password;
         signInWithEmailAndPassword(this.afAuth, hornUserEmail, hornUserPassword)
-            .then((res: any) => {
-                //console.log(res.user)
+            .then((userCredential: UserCredential) => {
+                console.log(userCredential.user)
+                // updateProfile(userCredential.user, {
+                //     displayName: 'klaas'
+                // })
                 // //console.log(`user is logged in; ${res.user}`)
                 this.store.dispatch(new UI.StopLoading);
                 // this.store.dispatch(new AUTH.IsLoggedIn(res.user))
-                this.router.navigate(['/user', { uid: res.user.uid }])
+                this.router.navigate(['/test'])
                 // this.postsService.getPostsByUserId()
             })
             .catch((err: any) => {
-                //console.log(`login failed; ${err}`)
+                console.log(`login failed; ${err}`)
                 this.store.dispatch(new UI.StopLoading);
             })
     }

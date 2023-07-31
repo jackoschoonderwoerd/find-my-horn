@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
     }
     initForm() {
         this.form = this.fb.group({
-
+            userName: new FormControl('jacko', [Validators.required]),
             email: new FormControl('jackoboes@gmail.com', [Validators.required]),
             password: new FormControl('123456', [Validators.required]),
         })
@@ -49,7 +49,7 @@ export class SignupComponent implements OnInit {
     onSubmit() {
         //console.log(this.form.value)
         const hornUser: HornUser = {
-            name: this.form.value.name,
+            name: this.form.value.userName,
             email: this.form.value.email,
             password: this.form.value.password
         }

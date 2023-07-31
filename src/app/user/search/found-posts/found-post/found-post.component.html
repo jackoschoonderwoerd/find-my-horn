@@ -1,4 +1,8 @@
-<main>
+<main [class.post-by-current-user]="ownsPost">
+    <!-- <div class="owner-id">{{foundPostDateToAny.ownerId}}</div>
+    <div class="current-user-id">
+        {{afAuth.currentUser.uid}}
+    </div> -->
     <div class="date-posted">
         <span>date posted:</span>
         <span>{{foundPostDateToAny.datePosted.toDate()|date:'short'}}</span>

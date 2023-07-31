@@ -1,35 +1,59 @@
 <mat-expansion-panel hideToggle
     expanded="true"
-    [class.isOwnedByUser]="currentUserId === postDateToAny.ownerId">
+    [class.isOwnedByUser]="ownsPost">
     <mat-expansion-panel-header>
+
+
         <mat-panel-title>
-            <div class="date-posted">
-                <div class="uid">uid: {{currentUserId}}</div>
-                <div class="ownerId">oid: {{postDateToAny.ownerId}}</div>
+            <div class="date-posted-left">
                 <span>date posted:</span>
-                {{postDateToAny.datePosted.toDate()|date|date:'short'}}
+                <span>
+                    {{postDateToAny.datePosted.toDate()|date|date:'short'}}
+                </span>
             </div>
-            <div class="buttons">
-                <button *ngIf="currentUserId === postDateToAny.ownerId"
-                    class="delete"
-                    mat-mini-fab
-                    color="warn"
-                    (click)="onDeletePost($event)">
-                    <mat-icon aria-hidden="false"
-                        aria-label="Example delete icon"
-                        fontIcon="delete"></mat-icon>
-                </button>
-            </div>
+            <button class="delete"
+                *ngIf="ownsPost"
+                mat-mini-fab
+                color="warn"
+                (click)="onDeletePost()">
+                <mat-icon aria-hidden="false"
+                    aria-label="Example delete icon"
+                    fontIcon="delete"></mat-icon>
+            </button>
+
         </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="content">
-        saxophone
-        <div class="post-id"><span>post id:</span>{{postDateToAny.id}}</div>
-        <div class="dop">
-            <span>date of purcahse:</span>
-            {{postDateToAny.dateOfPurchase.toDate()|date}}
+
+        <!-- <div class="post-id"><span>post id:</span>{{postDateToAny.id}}</div> -->
+        <div class="field dop">
+            <div class="field-content">
+                <span>date of purchase:</span>
+                <span>{{postDateToAny.dateOfPurchase.toDate()|date}}</span>
+            </div>
+            <button *ngIf="ownsPost"
+                mat-mini-fab
+                color="primary"
+                (click)="onEditDateOfPurchase()">
+                <mat-icon aria-hidden="false"
+                    aria-label="Example delete icon"
+                    fontIcon="edit"></mat-icon>
+            </button>
         </div>
-        <div class="comment"><span>comment:</span>{{post.comment}}</div>
+        <div class="field comment">
+            <div class="field-content">
+                <span>comment:</span>
+                <span>{{post.comment}}</span>
+            </div>
+            <button *ngIf="ownsPost"
+                mat-mini-fab
+                color="primary"
+                (click)="onEditComment()">
+                <mat-icon aria-hidden="false"
+                    aria-label="Example delete icon"
+                    fontIcon="edit"></mat-icon>
+            </button>
+        </div>
     </div>
 
 </mat-expansion-panel>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
@@ -22,11 +22,11 @@ export class HeaderComponent implements OnInit {
 
     isLoggedIn$: Observable<boolean>;
     user$: Observable<FirebaseUser>;
+    @Output() sidenavToggle = new EventEmitter<void>
 
     constructor(
         private authService: AuthService,
-        private store: Store<fromRoot.State>,
-        private router: Router,
+
         private afAuth: Auth,
     ) {
     }
@@ -43,11 +43,16 @@ export class HeaderComponent implements OnInit {
         })
     }
 
-
-
     onSignOut() {
         this.authService.logOut();
     }
+
+    onToggleSidenav() {
+        console.log('showSidenav called');
+        this.sidenavToggle.emit();
+    }
+
+
     onUser() {
         // this.store.select(fromRoot.getUser).subscribe((user: FirebaseUser) => {
         //     if (!user) {

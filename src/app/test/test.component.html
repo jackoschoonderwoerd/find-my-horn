@@ -1,0 +1,4 @@
+<div *ngFor="let path of paths$|async">
+    <app-test-child [path]="path"></app-test-child>
+</div>
+<app-add-post></app-add-post>
