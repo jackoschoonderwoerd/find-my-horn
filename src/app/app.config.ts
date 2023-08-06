@@ -19,11 +19,13 @@ import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environments';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideStore } from '@ngrx/store';
 import { reducers } from './app.reducer';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 export const appConfig: ApplicationConfig = {
@@ -36,5 +38,9 @@ export const appConfig: ApplicationConfig = {
             registrationStrategy: 'registerWhenStable:30000'
         }),
         provideStore(reducers),
-    ]
+        importProvidersFrom(
+            [
+                MatDialogModule
+            ]),
+    ],
 };

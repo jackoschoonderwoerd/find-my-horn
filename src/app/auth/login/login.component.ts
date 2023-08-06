@@ -10,6 +10,12 @@ import { HornUser } from 'src/app/shared/models/user.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../../app.reducer'
 import { Observable, map } from 'rxjs';
+import { UserCredential, sendPasswordResetEmail, } from '@angular/fire/auth';
+import * as UI from './../../shared/ui.actions';
+import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { LoginErrorComponent } from './login-error/login-error.component';
+import { NewPasswordRequestComponent } from './new-password-request/new-password-request.component';
 
 
 @Component({
@@ -22,7 +28,10 @@ import { Observable, map } from 'rxjs';
         MatFormFieldModule,
         MatButtonModule,
         MatInputModule,
-        MatProgressSpinnerModule],
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        LoginErrorComponent
+    ],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
@@ -34,7 +43,9 @@ export class LoginComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
-        private store: Store<fromRoot.State>
+        private store: Store<fromRoot.State>,
+        private router: Router,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -50,13 +61,54 @@ export class LoginComponent implements OnInit {
             password: new FormControl('123456', [Validators.required])
         })
     }
-    onSubmit() {
+    onLogin() {
         //console.log(this.form.value)
         const hornUser: HornUser = {
             name: this.form.value.name,
             email: this.form.value.email,
             password: this.form.value.password
         }
-        this.authService.logIn(hornUser);
+        this.authService.logIn(hornUser)
+    }
+    onLogInWithGoogle() {
+        this.authService.GoogleAuth();
+    }
+    onRequestNewPassword() {
+        const email = this.form.value.email
+        const dialogRef = this.dialog.open(NewPasswordRequestComponent, {
+            data: {
+                email: email,
+                message: 'a link for a new password will be sent to this email address'
+            }
+        })
+        dialogRef.afterClosed().subscribe((res: any) => {
+            if (res) {
+                this.authService.requestNewPassword(email)
+                    .then((res: any) => {
+
+                        console.log('email sent', res);
+                    })
+                    .catch((err: any) => {
+                        console.log('sending email failed', err);
+                    });
+            }
+        })
+    }
+
+    logInAsJackoboesGmail() {
+        const hornUser: HornUser = {
+            name: 'jacko gmail',
+            email: 'jackoboes@gmail.com',
+            password: '123456'
+        }
+        this.authService.logIn(hornUser)
+    }
+    logInAsJackoSchoonderwoerdYahoo() {
+        const hornUser: HornUser = {
+            name: 'jackoschoonderwoerd@yahoo',
+            email: 'jacko yahoo.nl',
+            password: '123456'
+        }
+        this.authService.logIn(hornUser)
     }
 }

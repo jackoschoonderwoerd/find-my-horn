@@ -1,0 +1,9 @@
+<main>
+    <div *ngFor="let path of paths$|async">
+        <app-posts [path]="path"></app-posts>
+    </div>
+    <button (click)="onShowAddSaxophone()"
+        color="primary"
+        mat-raised-button>{{(showAddSaxophone$|async) ? 'hide add saxophone':'show add saxophone'}}</button>
+    <app-add-post *ngIf="showAddSaxophone$|async"></app-add-post>
+</main>

@@ -1,5 +1,10 @@
 <form *ngIf="!(isLoading$|async)"
     [formGroup]="form">
+    <div class="login-buttons">
+        <button (click)="signUpAsJackoboesGmail()">jackoboes gmail</button>
+        <button (click)="signUpAsJackoSchoonderwoerdYahoo()">jackos choonderwoerd yahoo</button>
+
+    </div>
 
     <mat-label>user name</mat-label>
     <mat-form-field>
@@ -25,6 +30,11 @@
     <button mat-raised-button
         [disabled]="form.invalid"
         color="primary"
-        (click)="onSubmit()">submit</button>
+        (click)="onSignup()">sign up</button>
+    <p>or</p>
+    <button class="google-signup"
+        type="button"
+        mat-raised-button
+        (click)="onLogInWithGoogle()">log in with google</button>
+    <mat-spinner *ngIf="isLoading$|async"></mat-spinner>
 </form>
-<mat-spinner *ngIf="isLoading$|async"></mat-spinner>

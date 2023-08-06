@@ -1,7 +1,11 @@
 <form *ngIf="!(isLoading$|async)"
     [formGroup]="form">
 
+    <div class="login-buttons">
+        <button (click)="logInAsJackoboesGmail()">jackoboes gmail</button>
+        <button (click)="logInAsJackoSchoonderwoerdYahoo()">jackos choonderwoerd yahoo</button>
 
+    </div>
 
     <mat-label>email</mat-label>
     <mat-form-field>
@@ -17,9 +21,22 @@
             type="password">
     </mat-form-field>
 
-    <button mat-raised-button
-        [disabled]="form.invalid"
-        color="primary"
-        (click)="onSubmit()">submit</button>
+    <div class="buttons">
+        <button mat-raised-button
+            [disabled]="form.invalid"
+            color="primary"
+            (click)="onLogin()">submit
+        </button>
+        <button mat-raised-button
+            color="primary"
+            (click)="onRequestNewPassword()">request new password
+        </button>
+    </div>
+    <p>or</p>
+    <button class="google-signup"
+        type="button"
+        mat-raised-button
+        (click)="onLogInWithGoogle()">log in with google
+    </button>
 </form>
 <mat-spinner *ngIf="isLoading$|async"></mat-spinner>

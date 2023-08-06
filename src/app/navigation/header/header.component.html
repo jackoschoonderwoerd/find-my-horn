@@ -19,9 +19,10 @@
             aria-label="Example home icon"
             fontIcon="search"></mat-icon>
     </a>
-    <a routerLink="test"
+    <a routerLink="paths"
+        *ngIf="(user$|async)"
         routerLinkActive="router-link-active"
-        class="test">
+        class="paths">
         <mat-icon aria-hidden="false"
             aria-label="Example home icon"
             fontIcon="library_books"></mat-icon>
@@ -50,11 +51,15 @@
         routerLinkActive="router-link-active">admin</a>
 
     <a routerLink="user"
+        *ngIf="(user$|async)"
         routerLinkActive="router-link-active">
         <mat-icon aria-hidden="false"
             aria-label="Example person icon"
             fontIcon="person"></mat-icon>
     </a>
+    <a class="hideMobile display-name "><span>signed in as:</span>
+        <span> {{(user$|async)?.displayName}}</span></a>
+
 
 
 

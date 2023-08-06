@@ -1,9 +1,28 @@
-mat-sidenav-container,
 // mat-sidenav-content,
+mat-sidenav-container,
 mat-sidenav {
     height: 100%;
 }
 mat-sidenav-content {
     display: grid;
     grid-template-rows: 4rem auto 3rem;
+    app-header {
+        position: fixed;
+        z-index: 1;
+        // width: 100vw;
+    }
+    main {
+        // border: 5px solid red;
+        margin-top: 3rem;
+        // margin-bottom: 3rem;
+        width: 90%;
+        .filler {
+            height: 3rem;
+        }
+    }
+    app-footer {
+        position: fixed;
+        bottom: 0;
+        // width: 100%;
+    }
 }

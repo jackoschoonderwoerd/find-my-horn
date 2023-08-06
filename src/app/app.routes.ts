@@ -3,8 +3,9 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { UserComponent } from './user/user.component';
-import { TestComponent } from './test/test.component';
+
 import { SearchComponent } from './user/search/search.component';
+import { PathsComponent } from './saxophones/paths/paths.component';
 
 export const routes: Routes = [
     {
@@ -20,7 +21,7 @@ export const routes: Routes = [
         path: 'log-in', component: LoginComponent
     },
     {
-        path: 'test', component: TestComponent
+        path: 'paths', component: PathsComponent
     },
     {
         path: 'search', component: SearchComponent

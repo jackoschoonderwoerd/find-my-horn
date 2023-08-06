@@ -5,8 +5,8 @@ import { SaxType } from 'src/app/shared/models/saxType.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../../../../app.reducer'
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-// import * as ADD_HORN from './../store/add-post.actions'
-import * as ADD_HORN from '../store/add-post.actions'
+// import * as ADD_POST from './../store/add-post.actions'
+import * as ADD_POST from '../store/add-post.actions'
 
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -40,12 +40,15 @@ export class SelectTypeComponent implements OnInit {
     typeSelected(e) {
         if (e.value !== undefined) {
             const selectedSaxType: SaxType = e.value
-            this.store.dispatch(new ADD_HORN.SetSelectedSaxType(selectedSaxType))
+            this.store.dispatch(new ADD_POST.SetSelectedSaxType(selectedSaxType))
             this.dialogRef.close();
         }
     }
 
     clear() {
         this.matRef.options.forEach((data: MatOption) => data.deselect());
+    }
+    onCancel() {
+        this.dialogRef.close();
     }
 }

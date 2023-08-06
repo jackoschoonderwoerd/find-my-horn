@@ -47,6 +47,8 @@ export const getSerialNumber = createSelector(getHornState, fromAddHorn.getSeria
 export const getDateOfPurchase = createSelector(getHornState, fromAddHorn.getDateOfPurchase);
 export const getComment = createSelector(getHornState, fromAddHorn.getComment);
 export const getAddHornState = createSelector(getHornState, fromAddHorn.getState);
+export const getShowAddSaxophone = createSelector(getHornState, fromAddHorn.getShowAddSaxophone);
+export const getAddPostToRegisteredSaxophone = createSelector(getHornState, fromAddHorn.getAddPostToRegisteredSaxophone);
 export const clearAll = createSelector(getHornState, fromAddHorn.clearAll);
 
 export const getUserState = createFeatureSelector<fromUser.UserState>('user');

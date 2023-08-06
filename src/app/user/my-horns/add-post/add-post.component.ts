@@ -17,17 +17,19 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { Post } from 'src/app/shared/models/post.model';
 import { SelectBrandComponent } from './select-brand/select-brand.component';
 import { Brand } from 'src/app/shared/models/brand.model';
-import * as ADD_HORN from './../add-post/store/add-post.actions'
+import * as ADD_POST from './../add-post/store/add-post.actions'
 import { Observable } from 'rxjs';
 import { SelectTypeComponent } from './select-type/select-type.component';
 import { SaxType } from 'src/app/shared/models/saxType.model';
 import { SerialNumberComponent } from './serial-number/serial-number.component';
 import { DateOfPurchaseComponent } from './date-of-purchase/date-of-purchase.component';
 import { CommentComponent } from './comment/comment.component';
-import { PostsService } from '../posts/posts.service';
+// import { PostsService } from '../posts/posts.service';
 import { AddHornState } from './store/add-post.reducer';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrandNameComponent } from 'src/app/admin/brands/brand-name/brand-name.component';
+import { PostsService } from 'src/app/saxophones/posts.service';
+
 
 
 
@@ -79,6 +81,8 @@ export class AddPostComponent implements OnInit {
     dateOfPurchase: Date;
     comment: string;
 
+    addPostToRegisterdSaxophone$: Observable<boolean>
+
 
     @ViewChild('appSelectBrand', { static: false }) appSelectBrandComponent: SelectBrandComponent;
     @ViewChild('appSelectType', { static: false }) appSelectTypeComponent: SelectTypeComponent;
@@ -98,6 +102,7 @@ export class AddPostComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.addPostToRegisterdSaxophone$ = this.store.select(fromRoot.getAddPostToRegisteredSaxophone);
         this.store.select(fromRoot.getSelectedBrand).subscribe((selectedBrand: Brand) => {
             if (selectedBrand) {
                 //console.log(selectedBrand)
@@ -111,7 +116,15 @@ export class AddPostComponent implements OnInit {
             this.serialNumber = addHornState.serialNumber;
             this.dateOfPurchase = addHornState.dateOfPurchase;
             this.comment = addHornState.comment;
-            if (this.brand && this.saxType && this.serialNumber && this.dateOfPurchase && this.comment) {
+
+            if (this.brand && this.saxType && this.serialNumber) {
+                this.postInComplete = false;
+            } else {
+                this.postInComplete = true;
+            }
+
+            // if (this.brand && this.saxType && this.serialNumber && this.dateOfPurchase && this.comment) {
+            if (this.brand && this.saxType && this.serialNumber) {
                 const saxophone: Saxophone = {
                     brand: this.brand,
                     saxType: this.saxType,
@@ -125,11 +138,7 @@ export class AddPostComponent implements OnInit {
                     comment: this.comment
                 }
                 //console.log(`post complete ${this.post}`)
-                this.postInComplete = false;
 
-            } else {
-                //console.log(`post incomplete`)
-                this.postInComplete = true;
             }
         })
 
@@ -156,14 +165,14 @@ export class AddPostComponent implements OnInit {
 
     onClearForm() {
         //console.log('onClearAll()')
-        // this.store.dispatch(new ADD_HORN.ClearAll)
+        // this.store.dispatch(new ADD_POST.ClearAll)
         // this.appSelectBrandComponent.clear()
         // this.appSelectTypeComponent.clear()
         // this.appDateOfPurchaseComponent.clear()
 
     }
     onClearPostFromStore() {
-        this.store.dispatch(new ADD_HORN.ClearAll())
+        this.store.dispatch(new ADD_POST.ClearAll())
     }
 
     onAddPost() {
@@ -171,6 +180,7 @@ export class AddPostComponent implements OnInit {
             .then((res: any) => {
                 this.onClearForm();
                 this.onClearPostFromStore();
+                this.store.dispatch(new ADD_POST.ShowAddSaxophone(false))
             })
     }
 }

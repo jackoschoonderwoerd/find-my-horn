@@ -6,6 +6,9 @@ mat-toolbar {
         display: flex;
         gap: 1rem;
     }
+    .display-name {
+        color: lightgreen;
+    }
 }
 
 .router-link-active {

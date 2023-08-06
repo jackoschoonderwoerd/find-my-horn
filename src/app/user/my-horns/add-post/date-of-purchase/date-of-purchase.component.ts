@@ -8,10 +8,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../../../../app.reducer';
 
-import * as ADD_HORN from './../store/add-post.actions'
+import * as ADD_POST from './../store/add-post.actions'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PostsService } from '../../posts/posts.service';
+// import { PostsService } from '../../posts/posts.service';
 
 @Component({
     selector: 'app-date-of-purchase',
@@ -44,7 +44,7 @@ export class DateOfPurchaseComponent implements OnInit {
         private store: Store<fromRoot.State>,
         private dialogRef: MatDialogRef<DateOfPurchaseComponent>,
         @Inject(MAT_DIALOG_DATA) private data: any,
-        private postsService: PostsService
+
     ) { }
 
     ngOnInit(): void {
@@ -70,7 +70,7 @@ export class DateOfPurchaseComponent implements OnInit {
     onDateChanged(selectedDate: Date) {
         //console.log(selectedDate)
         if (!this.editmode) {
-            this.store.dispatch(new ADD_HORN.SetDateOfPurchase(selectedDate))
+            this.store.dispatch(new ADD_POST.SetDateOfPurchase(selectedDate))
             this.dialogRef.close();
         } else {
             // this.postsService.updatePostDateOfPurchase(this.post)
@@ -79,10 +79,9 @@ export class DateOfPurchaseComponent implements OnInit {
 
 
     clear() {
-        //console.log('clearing date')
-        //console.log(this.matInputRef)
         this.matInputRef.nativeElement.value = '';
-        // this.matInputRef.value
-
+    }
+    onCancel() {
+        this.dialogRef.close();
     }
 }

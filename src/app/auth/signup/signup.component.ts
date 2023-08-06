@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
     isLoading$: Observable<boolean>
     constructor(
         private fb: FormBuilder,
-        private authService: AuthService,
+        public authService: AuthService,
         private store: Store<{ ui: fromRoot.State }>
     ) { }
     ngOnInit(): void {
@@ -46,7 +46,7 @@ export class SignupComponent implements OnInit {
             password: new FormControl('123456', [Validators.required]),
         })
     }
-    onSubmit() {
+    onSignup() {
         //console.log(this.form.value)
         const hornUser: HornUser = {
             name: this.form.value.userName,
@@ -54,5 +54,24 @@ export class SignupComponent implements OnInit {
             password: this.form.value.password
         }
         this.authService.signUp(hornUser);
+    }
+    onLogInWithGoogle() {
+        this.authService.GoogleAuth();
+    }
+    signUpAsJackoboesGmail() {
+        const hornUser: HornUser = {
+            name: 'jackoboes@gmail',
+            email: 'jackoboes@gmail.com',
+            password: '123456'
+        }
+        this.authService.signUp(hornUser)
+    }
+    signUpAsJackoSchoonderwoerdYahoo() {
+        const hornUser: HornUser = {
+            name: 'jackoschoonderwoerd@yahoo',
+            email: 'jackoschoonderwoerd@yahoo.nl',
+            password: '123456'
+        }
+        this.authService.signUp(hornUser)
     }
 }

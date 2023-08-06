@@ -5,13 +5,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { Auth } from '@angular/fire/auth';
 import { Saxophone } from 'src/app/shared/models/saxophone.model';
 import { MatIconModule } from '@angular/material/icon';
-import { PostsService } from 'src/app/user/my-horns/posts/posts.service';
+// import { PostsService } from 'src/app/user/my-horns/posts/posts.service';
 import { UiService } from 'src/app/shared/ui.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { WarningComponent } from 'src/app/shared/warning/warning.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommentComponent } from 'src/app/user/my-horns/add-post/comment/comment.component';
+import { PostsService } from 'src/app/saxophones/posts.service';
+import * as fromRoot from './../../../../app.reducer';
+import * as ADD_POST from './../../../../user/my-horns/add-post/store/add-post.actions'
+import { Store } from '@ngrx/store';
 
 export interface PostDateToAny {
     id?: string;
@@ -47,7 +51,8 @@ export class PostComponent implements OnInit {
         public afAuth: Auth,
         private postsService: PostsService,
         private snackbar: MatSnackBar,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private store: Store<fromRoot.State>
     ) { }
 
     ngOnInit(): void {
@@ -62,7 +67,15 @@ export class PostComponent implements OnInit {
         }
 
     }
-    onDeletePost(): void {
+    onAddPostToThisSaxophone() {
+        this.store.dispatch(new ADD_POST.ShowAddSaxophone(true));
+        this.store.dispatch(new ADD_POST.SetBrand(this.post.saxophone.brand));
+        this.store.dispatch(new ADD_POST.SetSelectedSaxType(this.post.saxophone.saxType));
+        this.store.dispatch(new ADD_POST.SetSerialNumber(this.post.saxophone.serialNumber));
+        this.store.dispatch(new ADD_POST.AddPostToRegisteredSaxophone(true));
+    }
+    onDeletePost(e): void {
+        e.stopPropagation();
         this.showWarning('this will permanently delete the selected post')
             .then((res: any) => {
                 if (res) {
@@ -80,17 +93,22 @@ export class PostComponent implements OnInit {
                 console.log(err)
             })
     }
-    onEditComment() {
+    onEditComment(e): void {
+        console.log(e)
+        e.stopPropagation();
         const dialogRef = this.dialog.open(CommentComponent, {
             data: {
                 comment: this.post.comment
             }
         })
         dialogRef.afterClosed().subscribe((comment: string) => {
+            console.log(comment)
+            e.stopPropagation();
             if (comment) {
                 this.postsService.updateComment(this.post, comment)
                     .then((res: any) => {
                         console.log(res)
+                        e.stopPropagation()
                         this.showSnackbar('comment updated')
                     })
                     .catch((err: any) => {
@@ -101,6 +119,7 @@ export class PostComponent implements OnInit {
                 this.showSnackbar('updating comment cancelled')
             }
         })
+        e.stopPropagation();
     }
 
     private showSnackbar(message: string): void {

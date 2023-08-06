@@ -13,7 +13,7 @@ import { SaxType } from 'src/app/shared/models/saxType.model';
 import { Observable } from 'rxjs';
 import * as fromRoot from './../../app.reducer'
 import { Store } from '@ngrx/store';
-import { PostsService } from '../my-horns/posts/posts.service';
+import { PostsService } from '../../saxophones/posts.service';
 import { Post } from 'src/app/shared/models/post.model';
 import { FoundPostsComponent } from './found-posts/found-posts.component';
 

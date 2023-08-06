@@ -1,6 +1,63 @@
 <main>
-    <pre class="horn-user">{{hornUser$|async|json}}</pre>
-    <hr>
-    <pre class="user">{{user|json}}</pre>
+    <div class="user">
+        <div class="display-name">
+            <div class="name">
+                <span>display name:</span>
+                <span>{{user?.displayName}}</span>
+            </div>
+            <button mat-mini-fab
+                color="primary"
+                (click)="onEditDisplayName()">
+                <mat-icon aria-hidden="false"
+                    aria-label="Example edit icon"
+                    fontIcon="edit"></mat-icon>
+            </button>
+        </div>
+        <div class="email">
+            <span>email:</span>
+            <span>{{user?.email}}</span>
+        </div>
+        <div class="email-verified">
+            <span>email verified:</span>
+            <span>{{user?.emailVerified}}</span>
+        </div>
+
+    </div>
+    <!-- <form [formGroup]="displayNameForm"
+        class="display-name-form">
+        <div class="name">
+            <mat-form-field>
+                <mat-label>name</mat-label>
+                <input type="text"
+                    matInput
+                    formControlName="displayName">
+            </mat-form-field>
+            <button mat-mini-fab
+                color="primary"
+                (click)="onEditDisplayName()">
+                <mat-icon aria-hidden="false"
+                    aria-label="Example edit icon"
+                    fontIcon="edit"></mat-icon>
+            </button>
+        </div>
+        <mat-form-field>
+            <mat-label>email</mat-label>
+            <input type="text"
+                readonly
+                matInput
+                formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>email verified</mat-label>
+            <input type="text"
+                readonly
+                matInput
+                formControlName="emailVerified">
+        </mat-form-field>
+    </form> -->
 </main>
 <hr>
+
+<pre class="horn-user">{{hornUser$|async|json}}</pre>
+<hr>
+<pre class="user-data">{{user|json}}</pre>

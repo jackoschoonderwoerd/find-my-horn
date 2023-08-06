@@ -6,10 +6,11 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../../../../app.reducer';
-import * as ADD_HORN from './../store/add-post.actions'
+import * as ADD_POST from './../store/add-post.actions'
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { PostsService } from '../../posts/posts.service';
+import { PostsService } from 'src/app/saxophones/posts.service';
+// import { PostsService } from '../../posts/posts.service';
 
 
 
@@ -70,7 +71,7 @@ export class CommentComponent implements OnInit {
     onAddComment() {
         const comment: string = this.commentForm.value.comment;
         if (!this.editmode) {
-            this.store.dispatch(new ADD_HORN.SetComment(comment));
+            this.store.dispatch(new ADD_POST.SetComment(comment));
             this.dialogRef.close(comment);
         } else {
             this.dialogRef.close(comment)

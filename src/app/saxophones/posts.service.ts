@@ -16,23 +16,29 @@ import {
     query,
     where,
     arrayUnion,
-    arrayRemove
+    arrayRemove,
+    DocumentData
 } from '@angular/fire/firestore';
-import * as fromRoot from './../../../app.reducer'
+import * as fromRoot from './../app.reducer'
 import { Store } from '@ngrx/store';
-import { AddHornState } from '../add-post/store/add-post.reducer';
+
+import { AddHornState } from './../user/my-horns/add-post/store/add-post.reducer';
 import { Brand } from 'src/app/shared/models/brand.model';
 import { SaxType } from 'src/app/shared/models/saxType.model';
 import { Saxophone } from 'src/app/shared/models/saxophone.model';
 import { Auth } from '@angular/fire/auth';
-import { first, last, take, map, tap } from 'rxjs';
+import { first, last, take, map, tap, Observable } from 'rxjs';
 import { UserData } from 'src/app/shared/models/userData.model';
-import * as USER from './../../store/user.actions'
-import { SetPosts } from '../../store/user.actions';
-import * as ADD_HORN from './../add-post/store/add-post.actions'
-import * as UI from './../../../shared/ui.actions';
+// import * as USER from './../../store/user.actions'
+import * as USER from './../user/store/user.actions'
+// import { SetPosts } from '../../store/user.actions';
+
+import * as ADD_POST from './../user/my-horns/add-post/store/add-post.actions'
+// import * as UI from './../../../shared/ui.actions';
+import * as UI from './../shared/ui.actions';
 import { SaxophoneSearchCriterea as SSC } from 'src/app/shared/models/saxophone.model';
-import * as SEARCH from './../../search/store/search.actions'
+// import * as SEARCH from './../../search/store/search.actions'
+import * as SEARCH from 'src/app/user/search/store/search.actions'
 import { Router } from '@angular/router';
 
 
@@ -74,7 +80,7 @@ export class PostsService {
                     .then((res) => {
                         //console.log(res);
                         // this.getPostsByUserId();
-                        this.store.dispatch(new ADD_HORN.ClearAll())
+                        this.store.dispatch(new ADD_POST.ClearAll())
                     })
                     .catch(err => {
                         console.log(err)
@@ -123,23 +129,26 @@ export class PostsService {
         const path = `users/${userId}`;
         const pathsObjectRef = doc(this.firestore, path)
         return docData(pathsObjectRef).pipe(map((postsObject: any) => {
-            const pathArray: string[] = postsObject['pathsToPosts']
-
-            return pathArray
+            if (postsObject) {
+                console.log(postsObject)
+                const pathArray: string[] = postsObject['pathsToPosts']
+                return pathArray
+            }
 
 
         }))
     }
 
-    getPostsByPath(path: string) {
+    getPostsByPath(path: string): Observable<DocumentData[]> {
         // this.store.dispatch(new UI.StartLoading())
         const postRef = collection(this.firestore, path)
-        return collectionData(postRef, { idField: 'id' })
+        const postQuery = query(postRef, orderBy('datePosted'))
+        return collectionData(postQuery, { idField: 'id' })
             .pipe(
                 // map((el) => console.log(el))
                 tap(() => {
                     // console.log('hi')
-                    this.router.navigateByUrl('test')
+                    this.router.navigateByUrl('paths')
                 })
             )
 

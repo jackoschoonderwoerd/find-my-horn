@@ -1,41 +1,28 @@
 main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1rem;
     padding: 1rem;
+    .horn-fields {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        .horn-property {
+            padding: 0.3rem;
+            border: 1px solid gray;
+            background-color: wheat;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+    }
     .buttons {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 0.5rem;
+        gap: 1rem;
     }
-    // .left {
-    //     border: 1px solid black;
-    //     padding: 1rem;
-    //     display: grid;
-    //     grid-template-columns: 1fr;
-    //     .header {
-    //         font-size: 1.2rem;
-    //         text-transform: uppercase;
-    //         margin-bottom: 1rem;
-    //     }
-    // }
-    .right {
-        border: 1px solid black;
-        padding: 1rem;
-        display: grid;
-        grid-template-columns: 1fr;
-        .header {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-        }
-        .horn-property {
-            display: grid;
-            grid-template-columns: 8rem 1fr;
-        }
-        .buttons {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-    }
+}
+.mat-success {
+    background-color: green !important;
+    color: #fff !important;
 }

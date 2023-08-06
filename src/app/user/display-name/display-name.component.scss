@@ -1,10 +1,11 @@
-main {
+form {
     display: grid;
     grid-template-columns: 1fr;
     padding: 1rem;
-    gap: 1rem;
-    mat-form-field {
+    min-width: 20rem;
+    .buttons {
         display: grid;
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 }

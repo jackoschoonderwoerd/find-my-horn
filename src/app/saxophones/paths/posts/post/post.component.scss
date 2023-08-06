@@ -1,8 +1,12 @@
 main {
     .saxophone-properties {
+        display: grid;
+        grid-template-columns: 1fr auto;
         padding: 1rem;
-        div {
-            word-wrap: break-word;
+        .name-type {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
         }
     }
     mat-expansion-panel {
@@ -10,7 +14,7 @@ main {
             mat-panel-title {
                 min-width: 10rem;
                 display: grid;
-                grid-template-columns: 4rem auto;
+                grid-template-columns: 1fr auto;
                 // border: 1px solid green;
             }
             mat-panel-description {

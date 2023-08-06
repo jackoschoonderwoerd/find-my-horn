@@ -4,13 +4,14 @@ import { SaxType } from "src/app/shared/models/saxType.model";
 
 
 
-export const SELECTED_BRAND = '[Add Horn] Set Brand';
-// export const SELECTED_SAX_TYPES = '[Add Horn] Set Selected Sax Types';
+export const SELECTED_BRAND = '[Add Post] Set Brand';
 export const SELECTED_SAX_TYPE = '[Add Horm] Set Selected Sax Type';
-export const SERIAL_NUMBER = '[Add Horn] Set Serial Number';
-export const DATE_OF_PURCHASE = '[Add Horn] Date Of Purchase';
-export const COMMENT = '[Add Horn] Comment';
-export const CLEAR_ALL = '[Add Horn] Clear All'
+export const SERIAL_NUMBER = '[Add Post] Set Serial Number';
+export const DATE_OF_PURCHASE = '[Add Post] Date Of Purchase';
+export const COMMENT = '[Add Post] Comment';
+export const CLEAR_ALL = '[Add Post] Clear All';
+export const SHOW_ADD_SAXOPHONE = '[Add Post] Adding Saxophone';
+export const ADD_POST_TO_REGISTERED_SAXOPHONE = '[Add Post To Registered Saxophone] '
 
 export class SetBrand implements Action {
     readonly type = SELECTED_BRAND;
@@ -36,6 +37,14 @@ export class SetComment implements Action {
 export class ClearAll implements Action {
     readonly type = CLEAR_ALL
 }
+export class ShowAddSaxophone implements Action {
+    readonly type = SHOW_ADD_SAXOPHONE;
+    constructor(public showing: boolean) { }
+}
+export class AddPostToRegisteredSaxophone implements Action {
+    readonly type = ADD_POST_TO_REGISTERED_SAXOPHONE;
+    constructor(public adding: boolean) { }
+}
 
 
 export type AddHornActions =
@@ -44,5 +53,6 @@ export type AddHornActions =
     SetSerialNumber |
     SetDateOfPurchase |
     SetComment |
+    ShowAddSaxophone |
     ClearAll
 

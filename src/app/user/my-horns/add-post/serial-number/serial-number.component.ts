@@ -4,10 +4,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import * as ADD_HORN from '../store/add-post.actions';
+import * as ADD_POST from '../store/add-post.actions';
 import * as fromRoot from './../../../../app.reducer';
 import { Store } from '@ngrx/store';
-import { HornService } from '../../horn.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -31,7 +30,6 @@ export class SerialNumberComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private store: Store<fromRoot.State>,
-        private hornService: HornService,
         private dialogRef: MatDialogRef<SerialNumberComponent>
     ) { }
 
@@ -45,7 +43,10 @@ export class SerialNumberComponent implements OnInit {
     }
     onConfirmSerialNumber() {
         const serialNumber = this.serialNumberForm.value.serialNumber;
-        this.store.dispatch(new ADD_HORN.SetSerialNumber(serialNumber));
+        this.store.dispatch(new ADD_POST.SetSerialNumber(serialNumber));
+        this.dialogRef.close();
+    }
+    onCancel() {
         this.dialogRef.close();
     }
 }

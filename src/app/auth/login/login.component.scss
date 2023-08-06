@@ -8,6 +8,11 @@ form {
     margin: auto;
     max-width: 30rem;
     margin-top: 3rem;
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 
 mat-spinner {

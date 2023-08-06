@@ -8,12 +8,12 @@ import * as fromRoot from './app.reducer';
 // import * as AUTH from './auth/auth-store/auth.actions'
 import { Store } from '@ngrx/store';
 import { AdminService } from './admin/admin.service';
-import { HornService } from './user/my-horns/horn.service';
 import { User as FirebaseUser } from "@angular/fire/auth";
-import { PostsService } from './user/my-horns/posts/posts.service';
+// import { PostsService } from './user/my-horns/posts/posts.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavComponent } from './navigation/sidenav/sidenav.component';
+import { PostsService } from './saxophones/posts.service';
 
 
 @Component({
@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
         private store: Store<{ ui: fromRoot.State }>,
         private router: Router,
         private adminService: AdminService,
-        private hornService: HornService,
         private postsService: PostsService
     ) { }
 

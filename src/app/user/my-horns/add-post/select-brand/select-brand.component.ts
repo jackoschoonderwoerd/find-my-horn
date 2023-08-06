@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from './../../../../app.reducer'
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import * as ADD_HORN from './../store/add-post.actions'
+import * as ADD_POST from './../store/add-post.actions'
 import { HornService } from '../../horn.service';
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -46,14 +46,18 @@ export class SelectBrandComponent implements OnInit {
         if (e.value != undefined) {
             const brand: Brand = e.value
             if (e) {
-                this.store.dispatch(new ADD_HORN.SetBrand(brand));
+                this.store.dispatch(new ADD_POST.SetBrand(brand));
                 this.hornService.getTypes(brand.id)
-                this.store.dispatch(new ADD_HORN.SetSelectedSaxType(null))
+                this.store.dispatch(new ADD_POST.SetSelectedSaxType(null))
                 this.dialogRef.close();
             }
         }
     }
     clear() {
         this.matRef.options.forEach((data: MatOption) => data.deselect());
+    }
+
+    onCancel() {
+        this.dialogRef.close();
     }
 }

@@ -1,23 +1,36 @@
 <main>
     <div class="saxophone-properties"
         *ngIf="index === 0">
-        <div>{{post.saxophone.brand.name}}</div>
-        <div>{{post.saxophone.saxType.name}}</div>
-        <div>{{post.saxophone.serialNumber}}</div>
+        <div class="left">
+            <div class="name-type">
+                <div>{{post.saxophone.brand.name}}</div>
+                <div>{{post.saxophone.saxType.name}}</div>
+            </div>
+            <div>{{post.saxophone.serialNumber}}</div>
+        </div>
+        <div class="right">
+            <button class="add-post"
+                mat-mini-fab
+                color="primary"
+                (click)="onAddPostToThisSaxophone()">
+                <mat-icon aria-hidden="false"
+                    aria-label="Example delete icon"
+                    fontIcon="add"></mat-icon>
+            </button>
+        </div>
 
     </div>
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <div class="">posted:</div>
-                <div>{{postDateToAny.datePosted.toDate()|date}}</div>
+                <div>{{postDateToAny.datePosted.toDate()|date:'short'}}</div>
             </mat-panel-title>
             <mat-panel-description>
                 <button class="delete"
-                    *ngIf="ownesPost"
                     mat-mini-fab
                     color="warn"
-                    (click)="onDeletePost()">
+                    (click)="onDeletePost($event)">
                     <mat-icon aria-hidden="false"
                         aria-label="Example delete icon"
                         fontIcon="delete"></mat-icon>
@@ -34,14 +47,15 @@
                 <span>{{post.id}}</span>
 
             </div>
-            <div class="comment">
+            <div class="comment"
+                *ngIf="post.comment">
                 <div class="comment-content">
                     <div>comment:</div>
                     <div>{{post.comment}}</div>
                 </div>
                 <button mat-mini-fab
                     *ngIf=" afAuth.currentUser && post.ownerId === afAuth.currentUser.uid"
-                    (click)="onEditComment(post)"
+                    (click)="onEditComment($event)"
                     color="primary">
                     <mat-icon aria-hidden="false"
                         aria-label="Example home icon"
@@ -49,7 +63,8 @@
                 </button>
 
             </div>
-            <div class="date-of-purchase">
+            <div class="date-of-purchase"
+                *ngIf="postDateToAny.dateOfPurchase">
                 <span>date of purchase:</span>
                 <span>{{postDateToAny.dateOfPurchase.toDate()|date}}</span>
 
@@ -57,4 +72,3 @@
         </div>
     </mat-expansion-panel>
 </main>
-<!-- {{post|json}} -->

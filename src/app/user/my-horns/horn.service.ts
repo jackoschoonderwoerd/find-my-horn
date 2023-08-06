@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 import { SaxType } from 'src/app/shared/models/saxType.model';
 import { Store } from '@ngrx/store';
 // import * as fromAddHorn from './add-post/store/add-post.reducer'
-import * as ADD_HORN from './add-post/store/add-post.actions'
+import * as ADD_POST from './add-post/store/add-post.actions'
 import * as ADMIN from './../../admin/store/admin.actions'
 import * as fromRoot from './../../app.reducer'
 import { Brand } from 'src/app/shared/models/brand.model';
@@ -49,13 +49,6 @@ export class HornService {
         'selmer',
         'other'
     ]
-    types: string[] = [
-        'soprano',
-        'alto',
-        'tenor',
-        'baritone',
-        'other'
-    ]
 
     constructor(
         private firestore: Firestore,
@@ -63,9 +56,9 @@ export class HornService {
         private afAuth: Auth
     ) { }
 
-    getBrands() {
-        return this.brands;
-    }
+    // getBrands() {
+    //     return this.brands;
+    // }
 
     getTypes(brandId: string) {
         //console.log(brandId)
@@ -75,21 +68,5 @@ export class HornService {
             //console.log(saxTypes)
             this.store.dispatch(new ADMIN.SetAvailableSaxTypes(saxTypes));
         })
-    }
-
-    readHorn() {
-        this.store.subscribe(storeData => {
-            //console.log(storeData)
-            const brand: Brand = storeData.addHorn.brand;
-            const saxType: SaxType = storeData.addHorn.saxType;
-            const serialNumber = storeData.addHorn.serialNumber;
-
-
-            const path = `saxes/${brand.id}/saxTypes/${saxType.id}/serialNumbers/${serialNumber}`
-            const saxRef = doc(this.firestore, path)
-            docData(saxRef).subscribe(data => {
-                // console.log(data)
-            })
-        });
     }
 }

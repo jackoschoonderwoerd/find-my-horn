@@ -1,66 +1,82 @@
 <main>
-    <div class="buttons">
-        <button mat-raised-button
-            color="primary"
-            class="brand"
-            (click)="onSelectBrand()">select brand</button>
-        <button mat-raised-button
-            *ngIf="this.brand"
-            color="primary"
-            class="saxType"
-            (click)="onSelectSaxType()">select type</button>
-        <button mat-raised-button
-            *ngIf="this.brand && this.saxType"
-            color="primary"
-            class="serial-number"
-            (click)="onAddSerialNumber()">add serial number</button>
-        <button mat-raised-button
-            *ngIf="this.brand && this.saxType && this.serialNumber && this.serialNumber!='' "
-            color="primary"
-            class="dop"
-            (click)="onAddDateOfPurchase()">select date of purchase</button>
-        <button mat-raised-button
-            *ngIf="this.brand && this.saxType && this.serialNumber && this.serialNumber!='' && this.dateOfPurchase"
-            color="primary"
-            class="comment"
-            (click)="onAddComment()">add comment</button>
-    </div>
-
-
-    <div class="right">
-        <div class="header">post</div>
-        <div class="brand-name horn-property"><span>brand</span>
-            <!-- {{(selectedBrand$|async)?.name}} -->
-            {{(addHornState$|async).brand?.name}}
+    <div class="horn-fields">
+        brand-name-test: {{(addHornState$|async).brand?.name}}
+        <div class="add-post-to-registered-saxophone"
+            *ngIf="addPostToRegisterdSaxophone$|async">
+            adding post to registered saxophone
         </div>
-        <div class="sax-type horn-property"><span>type</span>
-            <!-- {{(selectedSaxType$|async)?.name}} -->
-            {{(addHornState$|async).saxType?.name}}
+        <div class="add-post-to-registered-saxophone"
+            *ngIf="!(addPostToRegisterdSaxophone$|async)">
+            registering new saxophone
         </div>
-        <div class="serial-number horn-property"><span>serial number</span>
-            {{(addHornState$|async).serialNumber}}
-            <!-- {{(serialNumber$|async)}} -->
-        </div>
-        <div class="dat-of-purchase horn-property"><span>dop</span>
-            <!-- {{dateOfPurchase$|async|date}} -->
-            {{(addHornState$|async).dateOfPurchase|date}}
-        </div>
-        <div class="comment horn-property"><span>comment</span>
-            <!-- {{comment$|async}} -->
-            {{(addHornState$|async).comment}}
-        </div>
-        <div class="buttons">
-            <button [disabled]="postInComplete"
-                class="add-post"
-                mat-raised-button
-                (click)="onAddPost()"
-                color="primary">add post</button>
+        <div class="brand horn-property">
             <button mat-raised-button
-                class="clear-post"
-                (click)="onClearPostFromStore()">clear (post from store)</button>
+                [disabled]="addPostToRegisterdSaxophone$|async"
+                [color]="(addHornState$|async).brand?.name ? '':'warn'"
+                class="brand-button"
+                (click)="onSelectBrand()">{{(addHornState$|async).brand?.name ? 'edit brand':'select brand'}}</button>
+            <div class="selected-value">
+                {{(addHornState$|async).brand?.name}}
+            </div>
+        </div>
+        <div class="sax-type horn-property"
+            *ngIf="this.brand">
+            <button mat-raised-button
+                [disabled]="addPostToRegisterdSaxophone$|async"
+                [color]="(addHornState$|async).saxType?.name ? '':'warn'"
+                class="saxType-button"
+                (click)="onSelectSaxType()">{{(addHornState$|async).saxType?.name ?'edit type':'select type'}}</button>
+            <div class="selected-value">
+                {{(addHornState$|async).saxType?.name}}
+            </div>
+        </div>
+        <div *ngIf="this.brand && this.saxType"
+            class="serial-number horn-property">
+            <button mat-raised-button
+                [disabled]="addPostToRegisterdSaxophone$|async"
+                [color]="(addHornState$|async).serialNumber ? '':'warn'"
+                class="serial-number-button"
+                (click)="onAddSerialNumber()">{{(addHornState$|async).serialNumber? 'edit serial number':'add serial number'}}</button>
+            <div class="selected-value">
+                {{(addHornState$|async).serialNumber}}
+
+            </div>
+        </div>
+        <div class="date-of-purchase horn-property"
+            *ngIf="this.brand && this.saxType && this.serialNumber && this.serialNumber!='' ">
+            <button mat-raised-button
+                [color]="(addHornState$|async).dateOfPurchase ?'':'primary'"
+                class="date-of-purchase-button"
+                (click)="onAddDateOfPurchase()">{{(addHornState$|async).dateOfPurchase ?'edit date of purchase':'select date of purchase'}}</button>
+            <div class="selected-value">
+                {{(addHornState$|async).dateOfPurchase|date}}
+            </div>
+        </div>
+
+        <div *ngIf="this.brand && this.saxType && this.serialNumber && this.serialNumber!='' && this.dateOfPurchase"
+            class="comment horn-property">
+            <button mat-raised-button
+                [color]="(addHornState$|async).comment ?'':'primary'"
+                class="comment-button"
+                (click)="onAddComment()">{{(addHornState$|async).comment ?'edit comment':'add comment'}}</button>
+            <div class="selected-value">
+
+                {{(addHornState$|async).comment}}
+            </div>
         </div>
     </div>
-    <!-- <pre>
-        {{addHornState$|async|json}}
-    </pre> -->
+    <div class="buttons">
+        <button [disabled]="postInComplete"
+            *ngIf="!postInComplete"
+            class="add-post"
+            mat-raised-button
+            (click)="onAddPost()"
+            color="success">add post</button>
+        <button mat-raised-button
+            class="clear-post"
+            (click)="onClearPostFromStore()">clear (post from store)</button>
+    </div>
+
+
+
 </main>
