@@ -57,8 +57,8 @@ export class PathsComponent implements OnInit {
         this.showAddSaxophone$.pipe(take(1)).subscribe((res: boolean) => {
             console.log(res)
             if (!res) {
-
                 this.store.dispatch(new ADD_POST.ShowAddSaxophone(true))
+                // this.store.dispatch(new ADD_POST.AddPostToRegisteredSaxophone(true))
             } else {
 
                 this.store.dispatch(new ADD_POST.ShowAddSaxophone(false))

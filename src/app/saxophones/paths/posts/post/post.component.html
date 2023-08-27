@@ -18,15 +18,22 @@
                     fontIcon="add"></mat-icon>
             </button>
         </div>
-
     </div>
+
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <div class="">posted:</div>
-                <div>{{postDateToAny.datePosted.toDate()|date:'short'}}</div>
+                {{postDateToAny.datePosted.toDate()|date}}
+                <!-- <div class="posted-by">posted by:</div>
+                <div class="display-name">{{afAuth.currentUser.displayName}}</div> -->
+                <!-- <div class="date">{{postDateToAny.datePosted.toDate()|date}}</div> -->
             </mat-panel-title>
             <mat-panel-description>
+                <div class="posted">
+                    <!-- <div class="posted-by">posted by:</div> -->
+                    <div class="display-name">{{afAuth.currentUser.displayName}}</div>
+                </div>
+
                 <button class="delete"
                     mat-mini-fab
                     color="warn"
@@ -40,15 +47,14 @@
         <div class="post-content">
             <div class="owner-id">
                 <span>owner id:</span>
-                <span>{{post.ownerId}}</span>
+                <span class="id">{{post.ownerId}}</span>
             </div>
             <div class="post-id">
                 <span>post id:</span>
-                <span>{{post.id}}</span>
+                <span class="id">{{post.id}}</span>
 
             </div>
-            <div class="comment"
-                *ngIf="post.comment">
+            <div class="comment">
                 <div class="comment-content">
                     <div>comment:</div>
                     <div>{{post.comment}}</div>

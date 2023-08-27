@@ -1,0 +1,11 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 20rem;
+    padding: 1rem;
+    gap: 1rem;
+    .buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,15 @@
+<main>
+    <div class="message">
+        {{data.message}}
+    </div>
+    <div class="buttons">
+        <button mat-raised-button
+            color="primary"
+            class="confirm"
+            (click)="onContinue()">continue</button>
+    </div>
+    <button mat-raised-button
+        color="primary"
+        class="confirm"
+        (click)="onCancel()">cancel</button>
+</main>

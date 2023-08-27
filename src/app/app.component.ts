@@ -55,8 +55,8 @@ export class AppComponent implements OnInit {
         })
         this.adminService.readBrandNames()
     }
-    openSidenavFunc() {
-        console.log('say hi')
-        this.openSidenav = !this.openSidenav;
-    }
+    // openSidenavFunc() {
+    //     console.log('say hi')
+    //     this.openSidenav = !this.openSidenav;
+    // }
 }

@@ -134,8 +134,6 @@ export class PostsService {
                 const pathArray: string[] = postsObject['pathsToPosts']
                 return pathArray
             }
-
-
         }))
     }
 
@@ -286,6 +284,18 @@ export class PostsService {
             this.store.dispatch(new SEARCH.SetFoundPosts(posts));
         })
     }
+
+    checkForRegisteredSaxophone(ssc: SSC) {
+        const path = `saxes/${ssc.brand.id}/saxTypes/${ssc.saxType.id}/serialNumbers/${ssc.serialNumber}/posts`;
+        const docRef = collection(this.firestore, path);
+        return collectionData(docRef)
+        // .subscribe((posts: Post[]) => {
+        // //console.log(posts);
+        // this.store.dispatch(new SEARCH.SetFoundPosts(posts));
+        // })
+    }
+
+
     updatePostComment(post: Post, updatedComment: string) {
         console.log(updatedComment)
         const path =

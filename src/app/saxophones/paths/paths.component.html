@@ -1,6 +1,7 @@
 <main>
     <div *ngFor="let path of paths$|async">
-        <app-posts [path]="path"></app-posts>
+        <app-posts *ngIf="!(showAddSaxophone$|async)"
+            [path]="path"></app-posts>
     </div>
     <button (click)="onShowAddSaxophone()"
         color="primary"
